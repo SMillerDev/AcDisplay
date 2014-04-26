@@ -50,6 +50,7 @@ public class Config {
     // timeouts
     public static final String KEY_TIMEOUT_ACTIVE = "timeout_active";
     public static final String KEY_TIMEOUT_NORMAL = "timeout_normal";
+    public static final String KEY_TIMEOUT_BREATH = "timeout_breath";
     public static final String KEY_TIMEOUT_SHORT = "timeout_short";
     //public static final String KEY_TIMEOUT_INSTANT = "timeout_instant";   Unused Variable
 
@@ -70,14 +71,17 @@ public class Config {
     // swipe actions
     public static final String KEY_SWIPE_LEFT_ACTION = "swipe_left_action";
     public static final String KEY_SWIPE_RIGHT_ACTION = "swipe_right_action";
+    public static final String KEY_BREATHING_NOTIFY = "breathing_notifications";
     private static Config sConfigSoft;
 
     private boolean mActiveDisplayEnabled;
     private boolean mEnabledOnlyWhileCharging;
+    private boolean mBreathesNotify;
     private boolean mLowPriorityNotificationsAllowed;
     private boolean mCanTimeOut;
     private int mTimeoutNormal;
     private int mTimeoutShort;
+    private int mTimeoutBreath;
     private int mInactiveTimeFrom;
     private int mInactiveTimeTo;
     private int mSwipeLeftAction;
@@ -102,6 +106,7 @@ public class Config {
         SharedPreferences prefs = getSharedPreferences(context);
         mActiveDisplayEnabled = prefs.getBoolean(KEY_ENABLED, false);
         mEnabledOnlyWhileCharging = prefs.getBoolean(KEY_ONLY_WHILE_CHARGING, false);
+        mBreathesNotify = prefs.getBoolean(KEY_BREATHING_NOTIFY, false);
         mLowPriorityNotificationsAllowed = prefs.getBoolean(KEY_LOW_PRIORITY_NOTIFICATIONS, false);
         mLockscreenEnabled = prefs.getBoolean(KEY_LOCK_SCREEN, false);
         mActiveMode = prefs.getBoolean(KEY_ACTIVE_MODE, false);
@@ -111,6 +116,7 @@ public class Config {
         mCanTimeOut = prefs.getBoolean(KEY_TIMEOUT_ACTIVE, false);
         mTimeoutNormal = prefs.getInt(KEY_TIMEOUT_NORMAL, 12000);
         mTimeoutShort = prefs.getInt(KEY_TIMEOUT_SHORT, 6000);
+        mTimeoutNormal = prefs.getInt(KEY_TIMEOUT_BREATH, 24000);
         mInactiveTimeFrom = prefs.getInt(KEY_INACTIVE_TIME_FROM, 0);
         mInactiveTimeTo = prefs.getInt(KEY_INACTIVE_TIME_TO, 0);
         mInactiveTimeEnabled = prefs.getBoolean(KEY_INACTIVE_TIME_ENABLED, false);
@@ -229,6 +235,17 @@ public class Config {
     }
 
     /**
+     * Setter to allow notifications to breath
+     *
+     */
+    public void setBreathingNotifyEnabled(Context context, boolean enabled,
+                                                         OnConfigChangedListener listener) {
+        saveOption(context, KEY_BREATHING_NOTIFY, enabled, listener,
+                mBreathesNotify != (mBreathesNotify = enabled));
+    }
+
+
+    /**
      * Setter to allow notifications with a lower priority like Google Now
      *
      * @param context
@@ -264,6 +281,19 @@ public class Config {
     public void setTimeoutNormal(Context context, int delayMillis, OnConfigChangedListener listener) {
         saveOption(context, KEY_TIMEOUT_NORMAL, delayMillis, listener,
                 mTimeoutNormal != (mTimeoutNormal = delayMillis));
+    }
+
+    /**
+     * Setter to set the timeout in a breathing notifications
+     * used via reflections!
+     *
+     * @param context
+     * @param delayMillis
+     * @param listener
+     */
+    public void setTimeoutBreath(Context context, int delayMillis, OnConfigChangedListener listener) {
+        saveOption(context, KEY_TIMEOUT_BREATH, delayMillis, listener,
+                mTimeoutBreath != (mTimeoutBreath = delayMillis));
     }
 
     /**
@@ -426,6 +456,8 @@ public class Config {
         return mTimeoutNormal;
     }
 
+    public int getTimeoutBreath() { return mTimeoutBreath; }
+
     public int getTimeoutShort() {
         return mTimeoutShort;
     }
@@ -456,6 +488,10 @@ public class Config {
 
     public boolean isEnabledOnlyWhileCharging() {
         return mEnabledOnlyWhileCharging;
+    }
+
+    public boolean isBreathingNotifications() {
+        return mBreathesNotify;
     }
 
     public boolean isLowPriorityNotificationsAllowed() {

@@ -23,10 +23,15 @@ import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.Fragment;
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.media.RingtoneManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -50,11 +55,13 @@ import android.widget.LinearLayout;
 import com.achep.activedisplay.AsyncTask;
 import com.achep.activedisplay.Config;
 import com.achep.activedisplay.Device;
+import com.achep.activedisplay.NotificationIds;
 import com.achep.activedisplay.Project;
 import com.achep.activedisplay.R;
 import com.achep.activedisplay.Timeout;
 import com.achep.activedisplay.activities.AcDisplayActivity;
 import com.achep.activedisplay.activities.KeyguardActivity;
+import com.achep.activedisplay.activities.MainActivity;
 import com.achep.activedisplay.animations.ProgressBarAnimation;
 import com.achep.activedisplay.compat.SceneCompat;
 import com.achep.activedisplay.fragments.components.MusicFragment;
@@ -63,6 +70,7 @@ import com.achep.activedisplay.fragments.components.UnlockFragment;
 import com.achep.activedisplay.notifications.NotificationPresenter;
 import com.achep.activedisplay.notifications.NotificationUtils;
 import com.achep.activedisplay.notifications.OpenStatusBarNotification;
+import com.achep.activedisplay.services.SendNotificationService;
 import com.achep.activedisplay.utils.BitmapUtils;
 import com.achep.activedisplay.utils.MathUtils;
 import com.achep.activedisplay.utils.ViewUtils;
@@ -157,6 +165,7 @@ public class AcDisplayFragment extends Fragment implements
         @Override
         public void onTimeoutEvent(int event) {
             if (!mParamsKeyguard) return;
+            Config config = Config.getInstance(getActivity());
             switch (event) {
                 case Timeout.EVENT_CLEARED:
                     mProgressBar.clearAnimation();
@@ -170,10 +179,40 @@ public class AcDisplayFragment extends Fragment implements
                     }
                     break;
                 case Timeout.EVENT_TIMEOUT:
+                    if (config.isBreathingNotifications()){
+                        //TODO: change this to something that'll only wake the screen
+                        Intent contentIntent = new Intent(Intent.ACTION_SCREEN_ON);
+                        contentIntent.putExtra("Log", Log.e(TAG, "Waking?"));
+                        /*Intent notificationIntent = SendNotificationService
+                                .createNotificationIntent(getActivity(), getString(R.string.app_name),
+                                        getString(R.string.test_notification_message),
+                                        NotificationIds.TEST_NOTIFICATION,
+                                        R.drawable.stat_test,
+                                        R.mipmap.ic_launcher,
+                                        Notification.PRIORITY_DEFAULT,
+                                        RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION),
+                                        PendingIntent.getService(getActivity(), 0, contentIntent,
+                                                PendingIntent.FLAG_UPDATE_CURRENT)
+                                );*/
+                        PendingIntent pi = breath(getActivity(),contentIntent);
+                    }
                     AcDisplayFragment.this.lock();
                     break;
             }
         }
+    }
+
+    public static PendingIntent breath(Context context, Intent intent) {
+        Config config = Config.getInstance(context);
+        AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        PendingIntent pendingIntent = PendingIntent.getService(context,intent.getIntExtra("id", 0),
+                intent,PendingIntent.FLAG_UPDATE_CURRENT);
+        if (Device.hasKitKatApi()) {
+            am.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + config.getTimeoutBreath(), pendingIntent);
+        } else {
+            am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + config.getTimeoutBreath(), pendingIntent);
+        }
+        return pendingIntent;
     }
 
     /**

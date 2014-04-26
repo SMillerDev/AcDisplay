@@ -26,6 +26,12 @@
         android:summaryOn="@string/settings_only_while_charging_on"
         android:summaryOff="@string/settings_only_while_charging_off" />
 
+    <CheckBoxPreference
+        android:key="breathing_notifications"
+        android:title="@string/settings_breathing_notify"
+        android:summaryOn="@string/settings_breathing_on"
+        android:summaryOff="@string/settings_breathing_off" />
+
     <com.achep.activedisplay.settings.preferences.InactiveHoursPreference
         android:key="inactive_hours"
         android:dialogIcon="@drawable/ic_dialog_night"

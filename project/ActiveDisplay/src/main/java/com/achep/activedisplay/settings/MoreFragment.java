@@ -37,6 +37,7 @@ public class MoreFragment extends PreferenceFragment implements
         Preference.OnPreferenceChangeListener {
 
     private CheckBoxPreference mOnlyWhileChargingPreference;
+    private CheckBoxPreference mBreathingNotifyPreference;
     private Preference mInactiveHoursPreference;
     private Preference mTimeoutPreference;
     private ListPreference mSwipeLeftListPreference;
@@ -54,12 +55,15 @@ public class MoreFragment extends PreferenceFragment implements
 
         mOnlyWhileChargingPreference = (CheckBoxPreference) findPreference(
                 Config.KEY_ONLY_WHILE_CHARGING);
+        mBreathingNotifyPreference = (CheckBoxPreference) findPreference(
+                Config.KEY_BREATHING_NOTIFY);
         mSwipeLeftListPreference = (ListPreference) findPreference(
                 Config.KEY_SWIPE_LEFT_ACTION);
         mSwipeRightListPreference = (ListPreference) findPreference(
                 Config.KEY_SWIPE_RIGHT_ACTION);
 
         mOnlyWhileChargingPreference.setOnPreferenceChangeListener(this);
+        mBreathingNotifyPreference.setOnPreferenceChangeListener(this);
         mSwipeLeftListPreference.setOnPreferenceChangeListener(this);
         mSwipeRightListPreference.setOnPreferenceChangeListener(this);
     }
@@ -71,6 +75,7 @@ public class MoreFragment extends PreferenceFragment implements
         config.addOnConfigChangedListener(this);
 
         updateOnlyWhileChargingPreference(config);
+        updateBreathingNotifyPreference(config);
         updateSwipeLeftPreference(config);
         updateSwipeRightPreference(config);
 
@@ -94,6 +99,8 @@ public class MoreFragment extends PreferenceFragment implements
         Config config = Config.getInstance(getActivity());
         if (preference == mOnlyWhileChargingPreference) {
             config.setActiveDisplayEnabledOnlyWhileCharging(getActivity(), (Boolean) newValue, this);
+        }else if (preference == mBreathingNotifyPreference) {
+            config.setBreathingNotifyEnabled(getActivity(), (Boolean) newValue, this);
         } else if (preference == mSwipeLeftListPreference) {
             config.setSwipeLeftAction(getActivity(), Integer.parseInt((String) newValue), this);
             updatePreferenceListSummary(mSwipeLeftListPreference);
@@ -117,6 +124,9 @@ public class MoreFragment extends PreferenceFragment implements
             case Config.KEY_TIMEOUT_SHORT:
                 updateTimeoutSummary(config);
                 break;
+            case Config.KEY_BREATHING_NOTIFY:
+                updateBreathingNotifyPreference(config);
+                break;
             case Config.KEY_ONLY_WHILE_CHARGING:
                 updateOnlyWhileChargingPreference(config);
                 break;
@@ -131,6 +141,10 @@ public class MoreFragment extends PreferenceFragment implements
 
     private void updateOnlyWhileChargingPreference(Config config) {
         updatePreference(mOnlyWhileChargingPreference, config.isEnabledOnlyWhileCharging());
+    }
+
+    private void updateBreathingNotifyPreference(Config config) {
+        updatePreference(mBreathingNotifyPreference, config.isBreathingNotifications());
     }
 
     private void updateSwipeLeftPreference(Config config) {

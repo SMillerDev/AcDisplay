@@ -221,7 +221,6 @@ public class MainActivity extends Activity implements Config.OnConfigChangedList
                 startActivity(new Intent(this, BlacklistActivity.class));
                 break;
             case R.id.action_test:
-                // startActivity(new Intent(this, AcDisplayActivity.class));
                 Intent contentIntent = new Intent(this, MainActivity.class);
                 Intent notificationIntent = SendNotificationService
                         .createNotificationIntent(this, getString(R.string.app_name),

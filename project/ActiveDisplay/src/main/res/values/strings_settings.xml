@@ -89,8 +89,14 @@
 
     <!-- Preference: Sleep timeouts -->
     <string name="preference_timeout_normal">After waking up or selecting a notification</string>
+    <string name="preference_timeout_breath">After the device has gone to sleep when breathing notifications are active</string>
     <string name="preference_timeout_short">After touching an inactive area</string>
     <string name="preference_timeout_sec">%1$s sec.</string>
     <string name="preference_no_timeout">No timeout</string>
+
+    <!--Breathing Notifications-->
+    <string name="settings_breathing_notify" >Breathing notifications</string>
+    <string name="settings_breathing_on" >Breathing notifications are activated. This will fade the screen in and out.</string>
+    <string name="settings_breathing_off" >Once your screen turns off it wont turn back on.</string>
 
 </resources>
