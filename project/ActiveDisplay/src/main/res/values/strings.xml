@@ -62,5 +62,6 @@
 
     <string name="device_admin_could_not_be_started">The device admin settings could not be started.</string>
     <string name="package_could_not_be_uninstalled">The package could not be uninstalled.</string>
+    <string name="settings_breathing_timeout_title">Breathing time</string>
 
 </resources>

@@ -81,7 +81,7 @@ public class TimeoutPreference extends DialogPreference implements
         View root = inflater.inflate(R.layout.preference_dialog_timeout, null);
         assert root != null;
 
-        mProgresses = new int[3];
+        mProgresses = new int[2];
         mGroups = new Group[mProgresses.length];
         mGroups[0] = new Group(
                 (SeekBar) root.findViewById(R.id.normal_timeout_seekbar),
@@ -91,10 +91,6 @@ public class TimeoutPreference extends DialogPreference implements
                 (SeekBar) root.findViewById(R.id.short_timeout_seekbar),
                 (TextView) root.findViewById(R.id.short_timeout_value),
                 "setTimeoutShort", "getTimeoutShort");
-        mGroups[2] = new Group(
-                (SeekBar) root.findViewById(R.id.breath_timeout_seekbar),
-                (TextView) root.findViewById(R.id.breath_timeout_value),
-                "setTimeoutBreath", "getTimeoutBreath");
 
         Resources res = getContext().getResources();
         final int max = res.getInteger(R.integer.config_timeout_maxDurationMillis) / MULTIPLIER;
@@ -127,9 +123,6 @@ public class TimeoutPreference extends DialogPreference implements
             group.seekBar.setMax(max);
             group.seekBar.setProgress(progress / MULTIPLIER);
             group.seekBar.setEnabled(!mDisabled.isChecked());
-            if (group.seekBar == root.findViewById(R.id.breath_timeout_seekbar)){
-                group.seekBar.setEnabled(config.isBreathingNotifications());
-            }
         }
 
         // Build custom dialog.
@@ -196,21 +189,19 @@ public class TimeoutPreference extends DialogPreference implements
             seekBar.setProgress(mMin);
             return;
         }
-        if(seekBar != mGroups[2].seekBar){
-            for (int j = i - 1; j >= 0; j--) {
-                int old = mGroups[j].seekBar.getProgress();
-                int current = Math.max(mProgresses[j], progress);
-                if (old != current) {
-                    mGroups[j].seekBar.setProgress(current);
-                }
+        for (int j = i - 1; j >= 0; j--) {
+            int old = mGroups[j].seekBar.getProgress();
+            int current = Math.max(mProgresses[j], progress);
+            if (old != current) {
+                mGroups[j].seekBar.setProgress(current);
             }
+        }
 
-            for (++i; i < mGroups.length; i++) {
-                int old = mGroups[i].seekBar.getProgress();
-                int current = Math.min(mProgresses[i], progress);
-                if (old != current) {
-                    mGroups[i].seekBar.setProgress(current);
-                }
+        for (++i; i < mGroups.length; i++) {
+            int old = mGroups[i].seekBar.getProgress();
+            int current = Math.min(mProgresses[i], progress);
+            if (old != current) {
+                mGroups[i].seekBar.setProgress(current);
             }
         }
     }

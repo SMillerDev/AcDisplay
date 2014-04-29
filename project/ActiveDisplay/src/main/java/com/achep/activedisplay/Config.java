@@ -61,6 +61,10 @@ public class Config {
     // active mode
     public static final String KEY_ACTIVE_MODE = "active_mode";
 
+    //breathing mode
+    public static final String KEY_BREATHING_NOTIFY = "breathing_notify";
+    public static final String KEY_BREATHING_TIMEOUT = "breathing_timeout";
+
     // interface
     public static final String KEY_UI_WALLPAPER_SHOWN = "wallpaper_shown";
     public static final String KEY_UI_SHADOW_TOGGLE = "shadow_toggle";
@@ -74,6 +78,8 @@ public class Config {
     private boolean mAcDisplayEnabled;
     private boolean mKeyguardEnabled;
     private boolean mActiveMode;
+    private boolean mBreathingEnabled;
+    private int mBreathingTimeout;
     private boolean mEnabledOnlyWhileCharging;
     private boolean mNotifyLowPriority;
     private boolean mTimeoutEnabled;
@@ -127,6 +133,12 @@ public class Config {
                 res.getBoolean(R.bool.config_default_keyguard_enabled));
         mActiveMode = prefs.getBoolean(KEY_ACTIVE_MODE,
                 res.getBoolean(R.bool.config_default_active_mode_enabled));
+        mBreathingEnabled = prefs.getBoolean(KEY_BREATHING_NOTIFY,
+                res.getBoolean(R.bool.config_default_breathing_enabled));
+
+        //breathing
+        mBreathingTimeout = prefs.getInt(KEY_BREATHING_TIMEOUT,
+                res.getInteger(R.integer.config_default_timeout_breathing));
 
         // notifications
         mNotifyLowPriority = prefs.getBoolean(KEY_LOW_PRIORITY_NOTIFICATIONS,
@@ -255,6 +267,26 @@ public class Config {
             ActiveModeService.handleState(context);
             KeyguardService.handleState(context);
         }
+    }
+
+    /**
+     * Setter to enable the Breathing mode
+     */
+    public void setBreathingActive(Context context, boolean enabled, OnConfigChangedListener listener) {
+        boolean changed = mBreathingEnabled != (mBreathingEnabled = enabled);
+        saveOption(context, KEY_BREATHING_NOTIFY, enabled, listener, changed);
+
+        if (changed) {
+            ActiveModeService.handleState(context);
+        }
+    }
+
+    /**
+     * Setter for breathing time
+     */
+    public void setTimeoutBreathing(Context context, int delayMillis, OnConfigChangedListener listener) {
+        boolean changed = mBreathingTimeout != (mBreathingTimeout = delayMillis);
+        saveOption(context, KEY_BREATHING_TIMEOUT, delayMillis, listener, changed);
     }
 
     /**
@@ -404,5 +436,9 @@ public class Config {
     public boolean isTimeoutEnabled() {
         return mTimeoutEnabled;
     }
+
+    public boolean isBreathingNotifications() { return mBreathingEnabled;  }
+
+    public int getTimeoutBreathing() { return mBreathingTimeout;  }
 
 }

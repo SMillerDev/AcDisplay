@@ -43,6 +43,7 @@ import android.widget.TextView;
 
 import com.achep.activedisplay.R;
 import com.achep.activedisplay.settings.enablers.ActiveModeEnabler;
+import com.achep.activedisplay.settings.enablers.BreathingModeEnabler;
 import com.achep.activedisplay.settings.enablers.Enabler;
 import com.achep.activedisplay.settings.enablers.LockscreenEnabler;
 
@@ -166,6 +167,7 @@ public class Settings extends PreferenceActivity {
     private static final String[] ENTRY_FRAGMENTS = {
             LockscreenFragment.class.getName(),
             ActiveFragment.class.getName(),
+            BreathingFragment.class.getName(),
             NotificationFragment.class.getName(),
             InterfaceFragment.class.getName(),
             MoreFragment.class.getName()
@@ -384,6 +386,7 @@ public class Settings extends PreferenceActivity {
 
         private final Enabler mLockscreenEnabler;
         private final Enabler mActiveEnabler;
+        private final Enabler mBreathingEnabler;
 
         private static class HeaderViewHolder {
             ImageView icon;
@@ -398,7 +401,8 @@ public class Settings extends PreferenceActivity {
             if (header.fragment == null && header.intent == null) {
                 return HEADER_TYPE_CATEGORY;
             } else if (header.id == R.id.lockscreen_settings
-                    || header.id == R.id.active_settings) {
+                    || header.id == R.id.active_settings
+                    || header.id == R.id.breathing_settings) {
                 return HEADER_TYPE_SWITCH;
             } else {
                 return HEADER_TYPE_NORMAL;
@@ -440,6 +444,7 @@ public class Settings extends PreferenceActivity {
             // Switches inflated from their layouts. Must be done before adapter is set in super
             mLockscreenEnabler = new LockscreenEnabler(context, new Switch(context));
             mActiveEnabler = new ActiveModeEnabler(context, new Switch(context));
+            mBreathingEnabler = new BreathingModeEnabler(context, new Switch(context));
         }
 
         @Override
@@ -494,6 +499,8 @@ public class Settings extends PreferenceActivity {
                         mLockscreenEnabler.setSwitch(holder.switch_);
                     } else if (header.id == R.id.active_settings) {
                         mActiveEnabler.setSwitch(holder.switch_);
+                    } else if (header.id == R.id.breathing_settings){
+                        mBreathingEnabler.setSwitch(holder.switch_);
                     }
                 case HEADER_TYPE_NORMAL:
                     holder.icon.setImageResource(header.iconRes);
@@ -515,11 +522,13 @@ public class Settings extends PreferenceActivity {
         public void resume() {
             mLockscreenEnabler.resume();
             mActiveEnabler.resume();
+            mBreathingEnabler.resume();
         }
 
         public void pause() {
             mLockscreenEnabler.pause();
             mActiveEnabler.pause();
+            mBreathingEnabler.pause();
         }
     }
 

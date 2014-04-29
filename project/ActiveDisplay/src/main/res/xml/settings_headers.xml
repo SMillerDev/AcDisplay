@@ -32,6 +32,12 @@
         android:title="@string/settings_active_title"
         android:icon="@drawable/ic_settings_active"/>
 
+    <!-- Breathing Mode -->
+    <header android:fragment="com.achep.activedisplay.settings.BreathingFragment"
+        android:id="@+id/breathing_settings"
+        android:title="@string/settings_breathing_title"
+        android:icon="@drawable/ic_settings_active"/>
+
     <!-- Notifications -->
     <header android:fragment="com.achep.activedisplay.settings.NotificationFragment"
         android:id="@+id/notification_settings"

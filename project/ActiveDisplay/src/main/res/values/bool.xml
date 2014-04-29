@@ -19,4 +19,5 @@
   -->
 <resources>
     <bool name="isTablet">false</bool>
+    <bool name="config_default_breathing_enabled">true</bool>
 </resources>
