@@ -349,6 +349,7 @@ public class AcDisplayFragment extends Fragment implements
         mHandler.postDelayed(mSelectWidgetRunnable, immediately ? 0 : 120);
     }
 
+    @TargetApi(Build.VERSION_CODES.KITKAT)
     private void selectWidget(Widget widget) {
         removeSelectWidgetCallbacks();
         if (mSelectedWidget != null) {
@@ -385,6 +386,7 @@ public class AcDisplayFragment extends Fragment implements
     /**
      * Changes current scene to given one.
      */
+    @TargetApi(Build.VERSION_CODES.KITKAT)
     private void goScene(SceneCompat sceneCompat) {
         if (mCurrentScene != sceneCompat) {
             mCurrentScene = sceneCompat;
@@ -405,6 +407,7 @@ public class AcDisplayFragment extends Fragment implements
      */
     // TODO: Optimize it
     // Spent hours on optimizing with no result: 0h
+    @TargetApi(Build.VERSION_CODES.KITKAT)
     private void updateNotificationList() {
         if (getActivity() == null) {
             return;
