@@ -20,10 +20,18 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+    <LinearLayout
+        android:id="@+id/actions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:orientation="horizontal" />
+
     <RelativeLayout
         android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/actions"
         android:background="?android:listChoiceBackgroundIndicator"
         android:padding="8dp"
         android:orientation="vertical">
@@ -77,11 +85,12 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_alignParentRight="true"
+        android:layout_alignTop="@id/content"
         android:layout_alignBottom="@id/content"
         android:paddingStart="12dp"
         android:paddingEnd="12dp"
         android:minWidth="48dp"
-        android:background="?android:listChoiceBackgroundIndicator">
+        android:background="@drawable/list_important_dark">
 
         <ImageView
             android:layout_width="match_parent"
@@ -91,11 +100,13 @@
 
     </com.achep.activedisplay.view.NotifyingLayout>
 
-    <LinearLayout
-        android:id="@+id/actions"
-        android:layout_width="match_parent"
+    <ImageView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/content"
-        android:orientation="horizontal" />
+        android:layout_alignBottom="@id/dismiss"
+        android:layout_toStartOf="@id/dismiss"
+        android:minWidth="2dp"
+        android:minHeight="2dp"
+        android:src="?acDisplayDotsDrawable" />
 
 </com.achep.activedisplay.widgets.NotificationWidget>

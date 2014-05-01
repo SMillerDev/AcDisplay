@@ -44,6 +44,9 @@ import com.achep.activedisplay.fragments.FeedbackDialog;
 import com.achep.activedisplay.fragments.HelpDialog;
 import com.achep.activedisplay.fragments.NewsDialog;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+
 /**
  * Helper class for showing fragment dialogs.
  */
@@ -99,6 +102,42 @@ public class DialogHelper {
 
         public Builder(Context context) {
             mContext = context;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public int hashCode() {
+            return new HashCodeBuilder(201, 32)
+                    .append(mContext)
+                    .append(mIcon)
+                    .append(mTitleText)
+                    .append(mMessageText)
+                    .append(mView)
+                    .toHashCode();
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public boolean equals(Object o) {
+            if (o == null)
+                return false;
+            if (o == this)
+                return true;
+            if (!(o instanceof Builder))
+                return false;
+
+            Builder builder = (Builder) o;
+            return new EqualsBuilder()
+                    .append(mContext, builder.mContext)
+                    .append(mIcon, builder.mIcon)
+                    .append(mTitleText, builder.mTitleText)
+                    .append(mMessageText, builder.mMessageText)
+                    .append(mView, builder.mView)
+                    .isEquals();
         }
 
         public Builder setIcon(Drawable icon) {
