@@ -52,7 +52,12 @@ import com.achep.activedisplay.widgets.CircleView;
 import java.util.logging.Logger;
 
 /**
- * Created by Artem on 25.01.14.
+ * Makes the viewable AcDisplay happen.
+ * @author Artem
+ * @since 25.01.14
+ * @see com.achep.activedisplay.activities.KeyguardActivity
+ * @see com.achep.activedisplay.Timeout
+ * @see com.achep.activedisplay.widgets.CircleView
  */
 public class AcDisplayActivity extends KeyguardActivity implements
         Timeout.OnTimeoutEventListener, CircleView.Callback {
@@ -237,10 +242,8 @@ public class AcDisplayActivity extends KeyguardActivity implements
             case Timeout.EVENT_TIMEOUT:
                 if(getConfig().isBreathingNotifications()){
                     Log.d(TAG, "You have Breathing enabled at "+getConfig().getTimeoutBreathing()+"ms");
-                    Intent i;
-                    i = new Intent("Presenter.getInstance().start(getApplicationContext())");
-                    i.putExtra("Log", Log.d(TAG, "rewake fired"));
-                    PendingIntent pendingIntent = breath(getApplicationContext(), i);
+                    Intent i = new Intent(this, com.achep.activedisplay.activities.AcDisplayActivity.class);
+                    breath(getApplicationContext(), i);
                 }
                 lock();
                 break;
@@ -250,7 +253,7 @@ public class AcDisplayActivity extends KeyguardActivity implements
     public static PendingIntent breath(Context context, Intent intent) {
         Config config = Config.getInstance(context);
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        PendingIntent pendingIntent = PendingIntent.getService(context,intent.getIntExtra("id", 0),
+        PendingIntent pendingIntent = PendingIntent.getService(context ,intent.getIntExtra("id", 5),
                 intent,PendingIntent.FLAG_UPDATE_CURRENT);
         if (Device.hasKitKatApi()) {
             am.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + config.getTimeoutBreathing(), pendingIntent);
