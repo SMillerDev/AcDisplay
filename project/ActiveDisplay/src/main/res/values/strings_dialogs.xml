@@ -51,25 +51,34 @@
 
     <!-- Help -->
     <string name="help">Help</string>
+    <string name="help_read_more">Read more</string>
     <string name="help_message"><![CDATA[
-        <font color="#ffffff"><b><i>How can I uninstall this app?</i></b></font><br/>
+        <b>How can I uninstall this app?</b>
         Go to Settings > Security > <a href="acdisplay_internal://launch_device_admins_activity">Device Administrators</a> and uncheck AcDisplay.
         You can now <a href="acdisplay_internal://uninstall">uninstall</a> AcDisplay normally.<br/>
         <br/>
-        <font color="#ffffff"><b><i>What is an active mode?</i></b></font><br/>
+        <b>What is an active mode?</b>
         Active mode uses the device\'s sensors to wake your device up when you need it.
         This works great if you want to pull your device from your pocket and get a quick glimpse at the notifications you\'ve received.
-        Active mode doesn\'t keep the CPU running so you shouldn\'t see a big difference in battery consumption.<br/>
-        <br/>
-        <b><a href="http://goo.gl/PT1sPt">Read full FAQ…</a></b>
+        Active mode doesn\'t keep the CPU running so you shouldn\'t see a big difference in battery consumption.
     ]]></string>
 
     <!-- News -->
     <string name="news_message"><![CDATA[
         Welcome to the new version of AcDisplay!
-        The update brings a completely new unique design and active mode.
+        This update brings a completely new and unique design with a lot of new possibilities.
         The design is more streamlined and is aimed at giving you the best possible experience!<br/>
         <br/>
+        <b>One touch for all actions.</b><br/>
+        Unlocking the device, checking the notifications or performing an actions on them can be done with a single motion.<br/>
+        <br/>
+        <b>Unlock field is anywhere and everywhere.</b><br/>
+        Swipe anywhere on free space to unlock.
+    ]]></string>
+
+    <!-- Speech -->
+    <string name="speech_title">Artem Chepurnoy</string>
+    <string name="speech_message"><![CDATA[
         Hello,<br/>
         First of all I want to thank you for the amount of downloads and high ratings on Play Store.
         Huge progress has been done in AcDisplay and to keep it <a href="https://www.github.com/AChep/AcDisplay">open</a> for everyone, and now I need some help from you.<br/>
