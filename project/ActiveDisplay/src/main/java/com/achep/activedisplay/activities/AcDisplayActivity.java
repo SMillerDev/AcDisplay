@@ -174,6 +174,8 @@ public class AcDisplayActivity extends KeyguardActivity implements
     @Override
     protected void onResume() {
         super.onResume();
+        Intent intent = new Intent("EAT_HOME_PRESS_START");
+        getApplicationContext().sendBroadcast(intent);
         handleWindowFocusChanged(true);
         mHandler.removeCallbacks(mPendingFinishRunnable);
     }
@@ -181,6 +183,8 @@ public class AcDisplayActivity extends KeyguardActivity implements
     @Override
     protected void onPause() {
         super.onPause();
+        Intent intent = new Intent("EAT_HOME_PRESS_STOP");
+        getApplicationContext().sendBroadcast(intent);
         mTimeout.setTimeoutDelayed(mConfig.getTimeoutNormal(), true);
         mTimeout.pause();
 
