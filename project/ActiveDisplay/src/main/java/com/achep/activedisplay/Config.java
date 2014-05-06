@@ -60,6 +60,7 @@ public class Config {
 
     // active mode
     public static final String KEY_ACTIVE_MODE = "active_mode";
+    public static final String KEY_ACTIVE_MODE_WITHOUT_NOTIFICATIONS = "active_mode_without_notifications";
 
     //breathing mode
     public static final String KEY_BREATHING_NOTIFY = "breathing_notify";
@@ -72,6 +73,7 @@ public class Config {
     public static final int DYNAMIC_BG_ARTWORK_MASK = 1;
     public static final int DYNAMIC_BG_NOTIFICATION_MASK = 2;
     public static final String KEY_UI_MIRRORED_TIMEOUT_BAR = "mirrored_timeout_progress_bar";
+    public static final String KEY_UI_NOTIFY_CIRCLED_ICON = "notify_circled_icon";
 
     private static Config sConfig;
 
@@ -80,6 +82,7 @@ public class Config {
     private boolean mActiveMode;
     private boolean mBreathingEnabled;
     private int mBreathingTimeout;
+    private boolean mActiveModeWithoutNotifies;
     private boolean mEnabledOnlyWhileCharging;
     private boolean mNotifyLowPriority;
     private boolean mTimeoutEnabled;
@@ -92,8 +95,10 @@ public class Config {
     private boolean mUiWallpaper;
     private boolean mUiWallpaperShadow;
     private boolean mUiMirroredTimeoutBar;
+    private boolean mUiNotifyCircledIcon;
 
     private ArrayList<OnConfigChangedListener> mListeners;
+    private Context mContext;
 
     // //////////////////////////////////////////
     // /////////// -- LISTENERS -- //////////////
@@ -115,14 +120,20 @@ public class Config {
     // ///////////// -- INIT -- /////////////////
     // //////////////////////////////////////////
 
-    public static synchronized Config getInstance(Context context) {
+    public static synchronized Config getInstance() {
         if (sConfig == null) {
-            sConfig = new Config(context);
+            sConfig = new Config();
         }
         return sConfig;
     }
 
-    private Config(Context context) {
+    private Config() { /* unused */ }
+
+    /**
+     * Loads saved values from shared preferences.
+     * This is called on {@link App app's} create.
+     */
+    void init(Context context) {
         mListeners = new ArrayList<>(6);
 
         Resources res = context.getResources();
@@ -139,6 +150,8 @@ public class Config {
         //breathing
         mBreathingTimeout = prefs.getInt(KEY_BREATHING_TIMEOUT,
                 res.getInteger(R.integer.config_default_timeout_breathing));
+        mActiveModeWithoutNotifies = prefs.getBoolean(KEY_ACTIVE_MODE_WITHOUT_NOTIFICATIONS,
+                res.getBoolean(R.bool.config_default_active_mode_without_notifies_enabled));
 
         // notifications
         mNotifyLowPriority = prefs.getBoolean(KEY_LOW_PRIORITY_NOTIFICATIONS,
@@ -169,6 +182,8 @@ public class Config {
                 res.getInteger(R.integer.config_default_ui_show_shadow_dynamic_bg));
         mUiMirroredTimeoutBar = prefs.getBoolean(KEY_UI_MIRRORED_TIMEOUT_BAR,
                 res.getBoolean(R.bool.config_default_ui_mirrored_timeout_bar));
+        mUiNotifyCircledIcon = prefs.getBoolean(KEY_UI_NOTIFY_CIRCLED_ICON,
+                res.getBoolean(R.bool.config_default_ui_notify_circled_icon));
 
         // other
         mEnabledOnlyWhileCharging = prefs.getBoolean(KEY_ONLY_WHILE_CHARGING,
@@ -177,6 +192,14 @@ public class Config {
 
     static SharedPreferences getSharedPreferences(Context context) {
         return context.getSharedPreferences(PREFERENCES_FILE_NAME, Context.MODE_PRIVATE);
+    }
+
+    /**
+     * You may get a context from here only on
+     * {@link Config.OnConfigChangedListener#onConfigChanged(Config, String, Object) config change}.
+     */
+    public Context getContext() {
+        return mContext;
     }
 
     private void notifyConfigChanged(String key, Object value, OnConfigChangedListener listener) {
@@ -203,7 +226,9 @@ public class Config {
         } else throw new IllegalArgumentException("Unknown option type.");
         editor.apply();
 
+        mContext = context;
         notifyConfigChanged(key, value, listener);
+        mContext = null;
     }
 
     // //////////////////////////////////////////
@@ -253,6 +278,11 @@ public class Config {
         if (changed) {
             ActiveModeService.handleState(context);
         }
+    }
+
+    public void setActiveModeWithoutNotificationsEnabled(Context context, boolean enabled, OnConfigChangedListener listener) {
+        boolean changed = mActiveModeWithoutNotifies != (mActiveModeWithoutNotifies = enabled);
+        saveOption(context, KEY_ACTIVE_MODE_WITHOUT_NOTIFICATIONS, enabled, listener, changed);
     }
 
     /**
@@ -377,6 +407,11 @@ public class Config {
         saveOption(context, KEY_UI_MIRRORED_TIMEOUT_BAR, enabled, listener, changed);
     }
 
+    public void setCircledLargeIconEnabled(Context context, boolean enabled, OnConfigChangedListener listener) {
+        boolean changed = mUiNotifyCircledIcon != (mUiNotifyCircledIcon = enabled);
+        saveOption(context, KEY_UI_NOTIFY_CIRCLED_ICON, enabled, listener, changed);
+    }
+
     public int getTimeoutNormal() {
         return mTimeoutNormal;
     }
@@ -409,6 +444,10 @@ public class Config {
         return mActiveMode;
     }
 
+    public boolean isActiveModeWithoutNotifiesEnabled() {
+        return mActiveModeWithoutNotifies;
+    }
+
     public boolean isEnabledOnlyWhileCharging() {
         return mEnabledOnlyWhileCharging;
     }
@@ -423,6 +462,10 @@ public class Config {
 
     public boolean isShadowEnabled() {
         return mUiWallpaperShadow;
+    }
+
+    public boolean isCircledLargeIconEnabled() {
+        return mUiNotifyCircledIcon;
     }
 
     public boolean isMirroredTimeoutProgressBarEnabled() {

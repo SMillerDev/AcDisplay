@@ -26,6 +26,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.hardware.SensorManager;
 import android.media.AudioManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -46,6 +47,8 @@ import com.achep.activedisplay.Operator;
 import com.achep.activedisplay.Presenter;
 import com.achep.activedisplay.R;
 import com.achep.activedisplay.Timeout;
+import com.achep.activedisplay.activemode.ActiveModeSensor;
+import com.achep.activedisplay.activemode.ActiveModeService;
 import com.achep.activedisplay.widgets.CircleView;
 
 import java.util.logging.Logger;
@@ -80,6 +83,19 @@ public class AcDisplayActivity extends KeyguardActivity implements
     private Handler mHandler = new Handler();
     private Timeout mTimeout = new T();
     private Config mConfig;
+
+    private ActiveModeSensor[] mSensors;
+    private ActiveModeSensor.Callback mSensorCallback = new ActiveModeSensor.Callback() {
+        @Override
+        public void show(ActiveModeSensor sensor) { /* unused */ }
+
+        @Override
+        public void hide(ActiveModeSensor sensor) {
+            if (isCloseableBySensor()) {
+                lock();
+            }
+        }
+    };
 
     private long mPendingFinishTime;
     private Runnable mPendingFinishRunnable = new Runnable() {
@@ -148,7 +164,7 @@ public class AcDisplayActivity extends KeyguardActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mConfig = Config.getInstance(this);
+        mConfig = Config.getInstance();
         if (mConfig.isWallpaperShown()) {
             if (mConfig.isShadowEnabled()) {
                 setTheme(R.style.AcDisplayTheme_Wallpaper_WithShadow);
@@ -164,6 +180,7 @@ public class AcDisplayActivity extends KeyguardActivity implements
 
         mImmersiveMode = Device.hasKitKatApi();
         mGestureDetector = new GestureDetector(this, new GestureListener());
+        mSensors = ActiveModeService.buildAvailableSensorsList(this);
 
         mTimeout.registerListener(this);
         mTimeout.setTimeoutDelayed(mConfig.getTimeoutNormal());
@@ -178,6 +195,12 @@ public class AcDisplayActivity extends KeyguardActivity implements
         getApplicationContext().sendBroadcast(intent);
         handleWindowFocusChanged(true);
         mHandler.removeCallbacks(mPendingFinishRunnable);
+
+        SensorManager sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        for (ActiveModeSensor sensor : mSensors) {
+            sensor.registerCallback(mSensorCallback);
+            sensor.onAttached(sensorManager, this);
+        }
     }
 
     @Override
@@ -193,6 +216,12 @@ public class AcDisplayActivity extends KeyguardActivity implements
             mHandler.postDelayed(
                     mPendingFinishRunnable,
                     PENDING_FINISH_DELAY);
+        }
+
+        SensorManager sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        for (ActiveModeSensor sensor : mSensors) {
+            sensor.onDetached(sensorManager);
+            sensor.unregisterCallback(mSensorCallback);
         }
     }
 
@@ -329,7 +358,7 @@ public class AcDisplayActivity extends KeyguardActivity implements
 
     /**
      * @return True is this activity may be closed by
-     * {@link com.achep.activedisplay.activemode.ActiveSensor active sensors}.
+     * {@link com.achep.activedisplay.activemode.ActiveModeSensor active sensors}.
      */
     // TODO: Write something better
     public boolean isCloseableBySensor() {

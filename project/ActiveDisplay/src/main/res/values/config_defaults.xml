@@ -22,6 +22,7 @@
     <bool name="config_default_enabled">false</bool>
     <bool name="config_default_keyguard_enabled">false</bool>
     <bool name="config_default_active_mode_enabled">false</bool>
+    <bool name="config_default_active_mode_without_notifies_enabled">true</bool>
     <bool name="config_default_enabled_only_while_charging">false</bool>
     <bool name="config_default_notify_low_priority">false</bool>
     <bool name="config_default_ui_show_wallpaper">false</bool>
@@ -30,6 +31,7 @@
     <bool name="config_default_inactive_time_enabled">false</bool>
     <bool name="config_default_timeout_enabled">true</bool>
     <integer name="config_default_timeout_breathing"> 5000</integer>
+    <bool name="config_default_ui_notify_circled_icon">false</bool>
     <integer name="config_default_timeout_normal">10000</integer>
     <integer name="config_default_timeout_short">5000</integer>
     <integer name="config_default_inactive_time_from">60</integer>
