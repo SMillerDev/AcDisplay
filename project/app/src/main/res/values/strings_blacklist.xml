@@ -19,7 +19,7 @@
   -->
 <resources>
 
-    <string name="blacklist">Blacklist</string>
+    <string name="blacklist">Apps</string>
     <string name="blacklist_app_config">App settings</string>
 
     <!-- Hide from AcDisplay -->
