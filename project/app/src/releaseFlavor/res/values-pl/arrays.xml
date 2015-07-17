@@ -20,12 +20,34 @@
   -->
 <resources>
   <string-array name="feedback_types">
-    <item>Błąd</item>
+    <item>Problem</item>
     <item>Sugestia</item>
     <item>Inne</item>
   </string-array>
   <string-array name="dynamic_background">
     <item>Grafika</item>
     <item>Ikona powiadomienia</item>
+  </string-array>
+  <string-array name="privacy_mode">
+    <item>Ukryj treść powiadomień</item>
+    <item>Ukryj akcje powiadomień</item>
+  </string-array>
+  <string-array name="notify_priorities">
+    <item>Krytyczne i pilne (nieodebrane połączenia, wskazówki, komunikaty alarmowe)</item>
+    <item>Ważne (komunikacja, ważne wiadomości)</item>
+    <item>Normalne (+ powiadomienia od starych aplikacji)</item>
+    <item>Mniej istotne (aktualizacje oprogramowania, spam)</item>
+    <item>Informacje w tle (pogoda, zakończone wydarzenia, sugestie)</item>
+  </string-array>
+  <string-array name="corners_actions">
+    <item>Odblokuj</item>
+    <item>Uruchom aparat</item>
+    <item>Uruchom aplikację Telefon</item>
+  </string-array>
+  <string-array name="keyguard_lock_delay">
+    <item>No delay</item>
+    <item>5 seconds</item>
+    <item>15 seconds</item>
+    <item>30 seconds</item>
   </string-array>
 </resources>

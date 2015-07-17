@@ -20,12 +20,34 @@
   -->
 <resources>
   <string-array name="feedback_types">
-    <item>Hiba</item>
+    <item>Probléma</item>
     <item>Javaslat</item>
     <item>Másik</item>
   </string-array>
   <string-array name="dynamic_background">
     <item>Grafika</item>
     <item>Értesítési ikon</item>
+  </string-array>
+  <string-array name="privacy_mode">
+    <item>Értesítés tartalmának elrejtése</item>
+    <item>Értesítési műveletek elrejtése</item>
+  </string-array>
+  <string-array name="notify_priorities">
+    <item>Fontos és sürgős (nem fogadott hívások, irányok, vészhelyzeti figyelmeztetések)</item>
+    <item>Fontos (kommunikáció, fontos levelek)</item>
+    <item>Normál (+régi alkalmazások értesítései)</item>
+    <item>Nem fontos (szoftverfrissítések, levélszemét)</item>
+    <item>Környezetfüggő és háttér információ (időjárás, lejárt események, javaslatok)</item>
+  </string-array>
+  <string-array name="corners_actions">
+    <item>Felold</item>
+    <item>Kamera indítása</item>
+    <item>Tárcsázó indítása</item>
+  </string-array>
+  <string-array name="keyguard_lock_delay">
+    <item>No delay</item>
+    <item>5 seconds</item>
+    <item>15 seconds</item>
+    <item>30 seconds</item>
   </string-array>
 </resources>

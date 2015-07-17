@@ -20,12 +20,34 @@
   -->
 <resources>
   <string-array name="feedback_types">
-    <item>Fout</item>
+    <item>Probleem</item>
     <item>Suggestie</item>
     <item>Overige</item>
   </string-array>
   <string-array name="dynamic_background">
     <item>Album Illustraties</item>
     <item>Notificatie icoon</item>
+  </string-array>
+  <string-array name="privacy_mode">
+    <item>Verberg inhoud van notificaties</item>
+    <item>Ververg acties van notificaties</item>
+  </string-array>
+  <string-array name="notify_priorities">
+    <item>Kritisch en urgent (gemiste oproepen, navigatie, noodmeldingen)</item>
+    <item>Belangrijk (communicatie, belangrijke mail)</item>
+    <item>Normaal (+meldingen van oude apps)</item>
+    <item>Niet belangrijk (software updates, junk mail)</item>
+    <item>Contextuele en achtergrond informatie (weer, oude evenementen, suggesties)</item>
+  </string-array>
+  <string-array name="corners_actions">
+    <item>Ontgrendelen</item>
+    <item>Start de camera</item>
+    <item>Start de dialer</item>
+  </string-array>
+  <string-array name="keyguard_lock_delay">
+    <item>No delay</item>
+    <item>5 seconds</item>
+    <item>15 seconds</item>
+    <item>30 seconds</item>
   </string-array>
 </resources>

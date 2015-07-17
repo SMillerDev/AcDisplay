@@ -16,34 +16,117 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA  02110-1301, USA.
  */
-
 package com.achep.acdisplay.services.media;
 
 import android.graphics.Bitmap;
+import android.support.annotation.Nullable;
+import android.text.TextUtils;
+
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 
 /**
  * Created by achep on 08.06.14.
  */
 public class Metadata {
-    public String artist;
-    public String trackTitle;
-    public String albumTitle;
-    public Bitmap bitmap;
-    public long duration;
 
+    @Nullable
+    public CharSequence title;
+    @Nullable
+    public CharSequence artist;
+    @Nullable
+    public CharSequence album;
+    @Nullable
+    public CharSequence subtitle;
+    @Nullable
+    public Bitmap bitmap;
+    @Nullable
+    public String id;
+    public long duration = -1;
+
+    /**
+     * @see #isEmpty()
+     */
     public void clear() {
+        title = null;
         artist = null;
-        trackTitle = null;
-        albumTitle = null;
+        subtitle = null;
         bitmap = null;
+        id = null;
         duration = -1;
+    }
+
+    void generateSubtitle() {
+        // General subtitle's format is
+        // ARTIST - ALBUM
+        StringBuilder sb = new StringBuilder();
+        if (!TextUtils.isEmpty(artist)) {
+            sb.append(artist);
+
+            if (!TextUtils.isEmpty(album)) {
+                sb.append(" - ");
+                sb.append(album);
+            }
+        } else if (!TextUtils.isEmpty(album)) {
+            sb.append(album);
+        } else {
+            sb = null;
+        }
+
+        subtitle = sb;
     }
 
     @Override
     public String toString() {
-        return "Metadata[artist=" + artist
-                + " trackTitle=" + trackTitle
-                + " albumTitle=" + albumTitle
-                + " duration=" + duration + "]";
+        return "Metadata[title=" + title
+                + " artist=" + artist
+                + " subtitle=" + subtitle
+                + " duration=" + duration
+                + " id=" + id
+                + " bitmap=" + bitmap + "]";
     }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(13, 2041)
+                .append(title)
+                .append(artist)
+                .append(subtitle)
+                .append(duration)
+                .append(id)
+                .append(bitmap)
+                .toHashCode();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this)
+            return true;
+        if (!(o instanceof Metadata))
+            return false;
+
+        Metadata metadata = (Metadata) o;
+        return new EqualsBuilder()
+                .append(duration, metadata.duration)
+                .append(id, metadata.id)
+                .append(title, metadata.title)
+                .append(artist, metadata.artist)
+                .append(subtitle, metadata.subtitle)
+                .append(bitmap, metadata.bitmap)
+                .isEquals();
+    }
+
+    /**
+     * @return {@code true} if metadata is empty
+     * @see #clear()
+     */
+    public boolean isEmpty() {
+        return title == null
+                && artist == null
+                && subtitle == null
+                && bitmap == null
+                && id == null
+                && duration == -1;
+    }
+
 }

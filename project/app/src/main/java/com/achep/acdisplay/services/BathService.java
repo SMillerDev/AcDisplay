@@ -16,39 +16,41 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA  02110-1301, USA.
  */
-
 package com.achep.acdisplay.services;
 
 import android.app.Notification;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.IBinder;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.util.Log;
 
 import com.achep.acdisplay.App;
-import com.achep.acdisplay.Build;
 import com.achep.acdisplay.R;
-import com.achep.acdisplay.activities.MainActivity;
-import com.achep.acdisplay.interfaces.IOnLowMemory;
+import com.achep.acdisplay.notifications.NotificationHelper;
+import com.achep.acdisplay.ui.activities.MainActivity;
+import com.achep.base.AppHeap;
+import com.achep.base.interfaces.IOnLowMemory;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import static com.achep.base.Build.DEBUG;
+
 /**
  * Created by achep on 26.05.14.
  *
  * @author Artem Chepurnoy
  */
-// THIS CAN BE NOT SAFE!!!
 public class BathService extends Service {
 
     private static final String TAG = "BathService";
@@ -59,67 +61,88 @@ public class BathService extends Service {
 
     public static void startService(Context context, Class<? extends ChildService> clazz) {
         synchronized (monitor) {
-            if (sCreated) {
-
-                // Send broadcast intent to notify BathService
-                // to start this child.
+            if (sRunning) {
                 Intent intent = new Intent(ACTION_ADD_SERVICE);
                 intent.putExtra(EXTRA_SERVICE_CLASS, clazz);
                 LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
             } else if (!sServiceMap.containsKey(clazz)) {
+                ChildService instance;
                 try {
-                    // Put empty child to host service and start host.
-                    sServiceMap.put(clazz, clazz.newInstance());
-                    context.startService(new Intent(context, BathService.class));
+                    instance = clazz.newInstance();
                 } catch (InstantiationException | IllegalAccessException e) {
-                    throw new RuntimeException(e.getMessage()); // Should never happen
+                    throw new RuntimeException(e);
                 }
+
+                sServiceMap.put(clazz, instance);
+                if (!sCreated) context.startService(new Intent(context, BathService.class));
             }
         }
     }
 
     public static void stopService(Context context, Class<? extends ChildService> clazz) {
         synchronized (monitor) {
-            if (sCreated) {
-
-                // Send broadcast intent to notify BathService
-                // to stop this child.
+            if (sRunning) {
                 Intent intent = new Intent(ACTION_REMOVE_SERVICE);
                 intent.putExtra(EXTRA_SERVICE_CLASS, clazz);
                 LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
             } else {
-
-                // Service is not created, so I can handle hash map manually.
                 sServiceMap.remove(clazz);
             }
         }
     }
 
-    private static final ConcurrentHashMap<Class, ChildService> sServiceMap = new ConcurrentHashMap<>(2);
+    private static final Map<Class, ChildService> sServiceMap = new ConcurrentHashMap<>(2);
     private static final Object monitor = new Object();
     private static boolean sCreated;
+    private static boolean sRunning;
 
     private LocalBroadcastManager mLocalBroadcastManager;
     private NotificationManager mNotificationManager;
     private String mLanguage;
 
-    private final HashMap<Class, ChildService> mMap = new HashMap<>(2);
+    private final Map<Class, ChildService> mMap = new HashMap<>(2);
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             final String action = intent.getAction();
             switch (action) {
+                // Received from a local broadcast receiver.
                 case ACTION_ADD_SERVICE:
                 case ACTION_REMOVE_SERVICE:
-                    Class clazz = (Class) intent.getSerializableExtra(EXTRA_SERVICE_CLASS);
-                    fireService(clazz, action.equals(ACTION_ADD_SERVICE));
+                    synchronized (monitor) {
+                        Class clazz = (Class) intent.getSerializableExtra(EXTRA_SERVICE_CLASS);
+                        boolean addition = ACTION_ADD_SERVICE.equals(action);
+                        boolean exists = mMap.containsKey(clazz);
+                        if (addition == exists) return;
+                        if (addition) { // Addition
+                            ChildService child;
+                            try {
+                                // Adding child to host service.
+                                child = (ChildService) clazz.newInstance();
+                            } catch (InstantiationException | IllegalAccessException e) {
+                                throw new RuntimeException(e); // Should never happen
+                            }
+                            child.setContext(BathService.this);
+                            child.onCreate();
+                            mMap.put(clazz, child);
+
+                            updateNotification();
+                        } else { // Removal
+                            ChildService child = mMap.remove(clazz);
+                            child.onDestroy();
+                            child.setContext(null);
+
+                            if (mMap.isEmpty()) {
+                                stopMySelf();
+                            } else updateNotification();
+                        }
+                    }
                     break;
+                // Received from a system broadcast receiver.
                 case Intent.ACTION_CONFIGURATION_CHANGED:
                     String lang = getResources().getConfiguration().locale.getLanguage();
                     if (!TextUtils.equals(mLanguage, lang)) {
                         mLanguage = lang;
-
-                        // Update the notification with new language set.
                         updateNotification();
                     }
                     break;
@@ -130,7 +153,6 @@ public class BathService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-
         mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         mLanguage = getResources().getConfiguration().locale.getLanguage();
 
@@ -142,6 +164,7 @@ public class BathService extends Service {
 
         synchronized (monitor) {
             sCreated = true;
+            sRunning = true;
 
             // Register for add / remove service events.
             intentFilter = new IntentFilter();
@@ -151,7 +174,7 @@ public class BathService extends Service {
             mLocalBroadcastManager.registerReceiver(mReceiver, intentFilter);
 
             if (sServiceMap.isEmpty()) {
-                stopSelf();
+                stopMySelf();
             } else {
                 // Init all children
                 Set<Map.Entry<Class, ChildService>> set = sServiceMap.entrySet();
@@ -170,74 +193,6 @@ public class BathService extends Service {
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-
-        unregisterReceiver(mReceiver);
-
-        synchronized (monitor) {
-            sCreated = false;
-
-            mLocalBroadcastManager.unregisterReceiver(mReceiver);
-            mLocalBroadcastManager = null;
-
-            // Kill all children
-            for (ChildService child : mMap.values()) {
-                child.onDestroy();
-            }
-            mMap.clear();
-        }
-
-        // Make sure that notification does not exists.
-        mNotificationManager.cancel(App.ID_NOTIFY_BATH);
-    }
-
-    private void updateNotification() {
-        mNotificationManager.notify(App.ID_NOTIFY_BATH, buildNotification());
-    }
-
-    /**
-     * <p>NOT SYNCHRONIZED!</p>
-     * Builds fresh notification with all {@link ChildService children services}'s
-     * {@link com.achep.acdisplay.services.BathService.ChildService#getLabel() labels} in.
-     * Content intent starts {@link com.achep.acdisplay.activities.MainActivity}.
-     */
-    private Notification buildNotification() {
-        boolean empty = true;
-
-        StringBuilder builder = new StringBuilder();
-        String divider = getString(R.string.settings_multi_list_divider);
-        for (ChildService child : mMap.values()) {
-            if (!empty) {
-                builder.append(divider);
-            }
-            builder.append(child.getLabel());
-            empty = false;
-        }
-
-        String contentText = builder.toString();
-        if (contentText.length() > 0) {
-            contentText = contentText.charAt(0) + contentText.substring(1).toLowerCase();
-        }
-
-        PendingIntent pendingIntent = PendingIntent.getActivity(this,
-                App.ID_NOTIFY_BATH, new Intent(this, MainActivity.class),
-                PendingIntent.FLAG_UPDATE_CURRENT);
-        return new Notification.Builder(this)
-                .setContentTitle(getString(R.string.service_bath))
-                .setContentText(contentText)
-                .setContentIntent(pendingIntent)
-                .setSmallIcon(R.drawable.stat_acdisplay)
-                .setPriority(Notification.PRIORITY_MIN)
-                .build();
-    }
-
-    @Override
-    public IBinder onBind(Intent intent) {
-        return null;
-    }
-
-    @Override
     public void onLowMemory() {
         super.onLowMemory();
         synchronized (monitor) {
@@ -247,39 +202,93 @@ public class BathService extends Service {
         }
     }
 
-    private void fireService(Class clazz, boolean add) {
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
         synchronized (monitor) {
-            boolean containsClazz = mMap.containsKey(clazz);
+            sCreated = false;
+            sRunning = false;
+            mLocalBroadcastManager.unregisterReceiver(mReceiver);
 
-            if (containsClazz == add) {
-                return;
-            }
+            // Kill all children.
+            for (ChildService child : mMap.values()) child.onDestroy();
+            mMap.clear();
 
-            if (add) {
-                try {
-                    // Adding child to host service.
-                    ChildService child = (ChildService) clazz.newInstance();
-                    child.setContext(BathService.this);
-                    child.onCreate();
-                    mMap.put(clazz, child);
-                } catch (InstantiationException | IllegalAccessException e) {
-                    throw new RuntimeException(e.getMessage()); // Should never happen
-                }
-                updateNotification();
-                return;
-            }
-
-            // Removing child from parent service.
-            ChildService child = mMap.remove(clazz);
-            child.onDestroy();
-
-            if (mMap.isEmpty()) {
-                stopSelf();
-            } else {
-                updateNotification();
-            }
+            // TODO: Should I add children back to pending map and then
+            // restart the service?
+            if (!sServiceMap.isEmpty()) startService(new Intent(this, getClass()));
         }
+
+        unregisterReceiver(mReceiver);
+        // Make sure that notification does not exists.
+        mNotificationManager.cancel(App.ID_NOTIFY_BATH);
+
+        // Leaks canary
+        AppHeap.getRefWatcher().watch(this);
     }
+
+    private void stopMySelf() {
+        sRunning = false;
+        stopSelf();
+    }
+
+    private void updateNotification() {
+        mNotificationManager.notify(App.ID_NOTIFY_BATH, buildNotification());
+    }
+
+    /**
+     * Builds fresh notification with all {@link ChildService children services}'s
+     * {@link com.achep.acdisplay.services.BathService.ChildService#getLabel() labels} in.
+     */
+    @NonNull
+    private Notification buildNotification() {
+        boolean empty = true;
+        StringBuilder sb = new StringBuilder();
+        String divider = getString(R.string.settings_multi_list_divider);
+        for (ChildService child : mMap.values()) {
+            String label = child.getLabel();
+            if (TextUtils.isEmpty(label)) {
+                if (DEBUG) {
+                    label = "[" + child.getClass().getSimpleName() + "]";
+                } else continue;
+            }
+            if (!empty) {
+                sb.append(divider);
+            }
+            sb.append(label);
+            empty = false;
+        }
+
+        // Format a message text.
+        String contentText = sb.toString();
+        if (contentText.length() > 0 && !mLanguage.contains("de")) {
+            contentText = contentText.charAt(0) + contentText.substring(1).toLowerCase();
+        }
+
+        // Get notification intent.
+        Intent intent = null;
+        for (ChildService child : mMap.values())
+            if (!TextUtils.isEmpty(child.getLabel())) {
+                if (intent == null) {
+                    intent = child.getSettingsIntent();
+                } else {
+                    intent = null;
+                    break;
+                }
+            }
+        if (intent == null) {
+            intent = new Intent(this, MainActivity.class);
+        }
+
+        return NotificationHelper.buildNotification(this, App.ID_NOTIFY_BATH, contentText, intent);
+    }
+
+    @Override
+    public IBinder onBind(Intent intent) {
+        return null;
+    }
+
+    //-- CHILD SERVICE --------------------------------------------------------
 
     /**
      * Base for fake foreground service hosted in {@link com.achep.acdisplay.services.BathService}.
@@ -293,12 +302,12 @@ public class BathService extends Service {
         private Context mContext;
 
         public ChildService() {
-            if (Build.DEBUG) {
+            if (DEBUG) {
                 Log.d(TAG, "Creating " + getClass().getSimpleName() + " service...");
             }
         }
 
-        void setContext(Context context) {
+        final void setContext(Context context) {
             mContext = context;
         }
 
@@ -323,11 +332,19 @@ public class BathService extends Service {
         public void onLowMemory() { /* placeholder */ }
 
         /**
-         * @return The label of this service.
+         * @return The human-readable label of this service.
          */
-        public abstract String getLabel();
+        @Nullable
+        public String getLabel() {
+            return null;
+        }
 
-        public Context getContext() {
+        @Nullable
+        public Intent getSettingsIntent() {
+            return null;
+        }
+
+        public final Context getContext() {
             return mContext;
         }
 

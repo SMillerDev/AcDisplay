@@ -23,20 +23,18 @@ import android.hardware.SensorManager;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.achep.acdisplay.Build;
 import com.achep.acdisplay.services.activemode.ActiveModeSensor;
-import com.squareup.seismic.ShakeDetector;
 
 import java.lang.ref.WeakReference;
 
+import uk.co.jarofgreen.lib.ShakeDetector;
+
+import static com.achep.base.Build.DEBUG;
+
 /**
  * Basing on results of accelerometer sensor it notifies when
- * {@link com.achep.acdisplay.acdisplay.AcDisplayActivity AcDisplay}
+ * {@link com.achep.acdisplay.ui.activities.AcDisplayActivity AcDisplay}
  * should be shown.
- * <p>
- *     Uses nice library <a href="https://github.com/square/seismic">seismic</a>
- *     to detect shake.
- * </p>
  *
  * @author Artem Chepurnoy
  */
@@ -47,7 +45,7 @@ public final class AccelerometerSensor extends ActiveModeSensor.Consuming implem
 
     private static WeakReference<AccelerometerSensor> sAccelerometerSensorWeak;
 
-    private ShakeDetector mShakeDetector;
+    private final ShakeDetector mShakeDetector;
 
     private AccelerometerSensor() {
         super();
@@ -70,23 +68,34 @@ public final class AccelerometerSensor extends ActiveModeSensor.Consuming implem
         return Sensor.TYPE_ACCELEROMETER;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getRemainingTime() {
+        return 15000; // 15 sec.
+    }
+
     @Override
     public void onStart(@NonNull SensorManager sensorManager) {
-        if (Build.DEBUG) Log.d(TAG, "Starting accelerometer sensor...");
+        if (DEBUG) Log.d(TAG, "Starting accelerometer sensor...");
 
         mShakeDetector.start(sensorManager);
     }
 
     @Override
     public void onStop() {
-        if (Build.DEBUG) Log.d(TAG, "Stopping accelerometer sensor...");
+        if (DEBUG) Log.d(TAG, "Stopping accelerometer sensor...");
 
         mShakeDetector.stop();
     }
 
+    /**
+     * Called on shake detected.
+     */
     @Override
-    public void hearShake() {
-        if (Build.DEBUG) Log.d(TAG, "Hearing shake...");
+    public void onShakeDetected() {
+        if (DEBUG) Log.d(TAG, "Hearing shake...");
 
         requestWakeUp();
     }

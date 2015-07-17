@@ -19,33 +19,37 @@
   ~ MA  02110-1301, USA.
   -->
 <resources>
-  <string name="close">Fermer</string>
-  <string name="about_action">À propos</string>
-  <string name="about_message"><![CDATA[
-        Copyright 2013-2014 <a href="https://plus.google.com/+АртёмЧепурной">Artem Chepurnoy</a>. Tous Droits Réservés.<br/>
-        <br/>
-        Remerciements à ces outils open source : %1$s et à tous ceux qui
-        <a href="http://translate.acdisplay.org">ont aidé pour les traductions</a> ou 
-        <a href="https://plus.google.com/102696863054832206920/posts/7wi3WfWGSfH">ont effectué un don</a>.
+  <string name="about_dialog_message"><![CDATA[         AcDisplay est une application gratuite et <a href="http://repo.acdisplay.org"> open source</a>.         Copyright 2013-%2$s <a href="http://artemchep.com"> Artem Chepurnoy</a>. Tous droits réservés. <br/>         <br/> Un grand merci à ces outils open source : %1$s et à tous ceux qui <a href="http://translate.acdisplay.org"> ont aidé avec les traductions</a> ou avec des donations.     ]]></string>
+  <string name="donate_dialog_title">Faire un don aux développeurs</string>
+  <string name="donate_dialog_message">AcDisplay est une application gratuite et open source. Vous pouvez montrer votre reconnaissance et soutenir le développement en faisant un don :</string>
+  <string name="donate_alert_no_responsibility">Notez que Google n\'est pas responsable pour cette méthode de paiement.</string>
+  <string name="donate_billing_not_supported">Les achats via l\'application ne sont pas pris en charge sur cet appareil.</string>
+  <string name="donate_thanks">Merci beaucoup !</string>
+  <string name="donation_1">Une glace</string>
+  <string name="donation_4">Un café</string>
+  <string name="donation_10">Une facture d\'électricité</string>
+  <string name="donation_20">Un bon oreiller</string>
+  <string name="donation_50">Un disque SSD</string>
+  <string name="donation_99">Une chaîne Hi-Fi</string>
+  <string name="cry_dialog_title">Soutenir le développement</string>
+  <string name="cry_dialog_message"><![CDATA[
+         AcDisplay est une application gratuite et <a href="http://repo.acdisplay.org">open source</a> et nous passons beaucoup de temps et de ressources pour le développement. S\'il vous plaît, pensez à faire un don si vous appréciez notre travail et ainsi soutenir nos efforts futurs.]]></string>
+  <string name="help_dialog_title">Aide</string>
+  <string name="feedback_dialog_title">Commentaire</string>
+  <string name="feedback_dialog_message_hint">Votre message. Les caractéristiques de votre appareil seront incluses automatiquement.</string>
+  <string name="feedback_dialog_attach_log">Joindre un journal</string>
+  <string name="feedback_dialog_read_help">Foire aux questions</string>
+  <string name="feedback_error_no_app">Installer une application e-mail.</string>
+  <string name="feedback_error_msg_too_short">Le message doit contenir au moins %1$d caractères.</string>
+  <string name="feedback_error_accessing_log">Erreur d\'accès au Journal de l\'application. L\'erreur est : %1$s</string>
+  <string name="compat_dialog_title">Mode de compatibilité</string>
+  <string name="compat_dialog_message">AcDisplay s\'exécute dans un mode de compatibilité pour supporter Android %1$s : %2$s</string>
+  <string name="compat_dialog_item_notification">AcDisplay utilise le service de l\'accessibilité, il ne peut donc pas détecter des notifications rejetées/mises à jour, ou fermer les notifications.</string>
+  <string name="compat_dialog_item_immersive_mode">La barre de navigation est toujours affichée.</string>
+  <string name="compat_dialog_item_music_widget">Aucun widget musique.</string>
+  <string name="error_dialog_title">Un problème est survenu</string>
+  <string name="error_dialog_custom_widget_lg"><![CDATA[
+        En raison d\'une erreur de logiciel dans le logiciel de LG, il est impossible de définir un widget personnalisé.
+        <a href="https://github.com/AChep/AcDisplay/issues/76">Lire la suite</a>.
     ]]></string>
-  <string name="help">Aide</string>
-  <string name="help_faq">Foire aux questions</string>
-  <string name="news_message"><![CDATA[
-Bienvenue dans la nouvelle version de AcDisplay !
-Cette mise à jour apporte un design entièrement nouveau et unique avec beaucoup de nouvelles possibilités.
-La design est plus léger et est destiné à vous donner la meilleure expérience possible !<br/>
-<br/>
-<b>Un seul toucher pour toutes les actions.</b><br/>
-Déverrouiller l\'appareil, vérifier les notifications ou effectuer une action sur celles-ci peuvent être réalisés dans un seul geste.<br/>
-<br/>
-<b>La zone de déverrouillage est n\'importe où et partout.</b><br/>
-Faite glisser n\'importe où votre doigt dans un espace libre pour déverrouiller.
-]]></string>
-  <string name="speech_message"><![CDATA[
-Bonjour,<br/>
-Tout d\'abord, je tiens à vous remercier pour la quantité de téléchargements et les notes élevées sur le Play Store.
-D\'énormes progrès ont été réalisés dans le développement d\'AcDisplay et cela n\'aurait pas pu être fait sans la communauté. C\'est pourquoi AcDisplay est <a href="https://www.github.com/AChep/AcDisplay">accessible et gratuit</a> pour tout le monde. Mais j\'ai besoin d\'aide de votre part.<br/>
-Je suis en effet dans ma dernière année d\'école et je souhaiterais acheter un ordinateur portable pour mes futures études et ainsi continuer à développer le meilleur logiciel au monde, où que je sois.
-C\'est pour financer cet achat que j\'apprécierais fortement votre aide.
-]]></string>
 </resources>

@@ -20,12 +20,34 @@
   -->
 <resources>
   <string-array name="feedback_types">
-    <item>באג</item>
+    <item>בעיה</item>
     <item>הצעה</item>
     <item>אחר</item>
   </string-array>
   <string-array name="dynamic_background">
     <item>אמנות</item>
     <item>סמלון התראות</item>
+  </string-array>
+  <string-array name="privacy_mode">
+    <item>הסתר תוכן הודעות</item>
+    <item>הסתר פעולות של הודעות</item>
+  </string-array>
+  <string-array name="notify_priorities">
+    <item>קריטי ודחופים (פיספוסים שיחות, כיוונים, התראות חירום)</item>
+    <item>חשוב (תקשורת, דואר חשוב)</item>
+    <item>רגיל (+ יישומונים ישנים)</item>
+    <item>לא-חשוב (עדכוני תוכנה, דואר זבל)</item>
+    <item>מידע הקשרי ורקע (מזג אויר, שפג תוקפו אירועים, הצעות)</item>
+  </string-array>
+  <string-array name="corners_actions">
+    <item>לבטל את הנעילה</item>
+    <item>להפעיל את המצלמה</item>
+    <item>להפעיל את החייגן</item>
+  </string-array>
+  <string-array name="keyguard_lock_delay">
+    <item>No delay</item>
+    <item>5 seconds</item>
+    <item>15 seconds</item>
+    <item>30 seconds</item>
   </string-array>
 </resources>

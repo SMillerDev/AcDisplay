@@ -20,12 +20,34 @@
   -->
 <resources>
   <string-array name="feedback_types">
-    <item>Помилка</item>
+    <item>Проблема</item>
     <item>Пропозиція</item>
     <item>Інше</item>
   </string-array>
   <string-array name="dynamic_background">
     <item>Обкладинки</item>
-    <item>Значок сповіщення</item>
+    <item>Значок повідомлення</item>
+  </string-array>
+  <string-array name="privacy_mode">
+    <item>Приховати вміст повідомлень</item>
+    <item>Приховати дії повідомлень</item>
+  </string-array>
+  <string-array name="notify_priorities">
+    <item>Критичні та невідкладні (пропущені дзвінки, вказівки, аварійні оповіщення)</item>
+    <item>Важливі (діалоги, важливі повідомлення)</item>
+    <item>Звичайні (а також повідомлення від старих додатків)</item>
+    <item>Неважливі (оновлення програм, небажана пошта)</item>
+    <item>Контекстна та фонова інформація (погода, минулі події, поради)</item>
+  </string-array>
+  <string-array name="corners_actions">
+    <item>Розблокувати</item>
+    <item>Запустити камеру</item>
+    <item>Запустити додаток дзвінків</item>
+  </string-array>
+  <string-array name="keyguard_lock_delay">
+    <item>No delay</item>
+    <item>5 seconds</item>
+    <item>15 seconds</item>
+    <item>30 seconds</item>
   </string-array>
 </resources>

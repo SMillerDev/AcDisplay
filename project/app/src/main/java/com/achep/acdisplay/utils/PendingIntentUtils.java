@@ -19,20 +19,59 @@
 package com.achep.acdisplay.utils;
 
 import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
+import com.achep.base.tests.Check;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 /**
  * Created by Artem on 02.01.14.
  */
 public class PendingIntentUtils {
 
-    public static boolean sendPendingIntent(@Nullable PendingIntent contentIntent) {
-        if (contentIntent != null)
+    /**
+     * Perform the operation associated with this PendingIntent.
+     */
+    public static boolean sendPendingIntent(@Nullable PendingIntent pi) {
+        return sendPendingIntent(pi, null, null);
+    }
+
+    /**
+     * Perform the operation associated with this PendingIntent.
+     */
+    public static boolean sendPendingIntent(@Nullable PendingIntent pi, Context context, Intent intent) {
+        if (pi != null)
             try {
-                contentIntent.send();
+                // The Context of the caller may be null if
+                // <var>intent</var> is also null.
+                Check.getInstance().isTrue(context != null || intent == null);
+                //noinspection ConstantConditions
+                pi.send(context, 0, intent);
                 return true;
             } catch (PendingIntent.CanceledException e) { /* unused */ }
         return false;
+    }
+
+    /**
+     * Check whether this PendingIntent will launch an Activity.
+     */
+    public static boolean isActivity(@NonNull PendingIntent pi) {
+        Method method;
+        try {
+            method = PendingIntent.class.getDeclaredMethod("isActivity");
+            method.setAccessible(true);
+            return (boolean) method.invoke(pi);
+        } catch (NoSuchMethodException
+                | InvocationTargetException
+                | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return true; // We must use `true` ss the fallback value
     }
 
 }

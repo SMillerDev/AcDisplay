@@ -19,31 +19,34 @@
   ~ MA  02110-1301, USA.
   -->
 <resources>
-  <string name="close">关闭</string>
-  <string name="about_action">关于</string>
-  <string name="about_message"><![CDATA[
-Copyright © 2013-2014 <a href="https://plus.google.com/+АртёмЧепурной">Artem Chepurnoy</a> 保留一切权利。<br/>
-<br/>
-非常感谢以下开源工具：%1$s 和所有<a href="HTTPs://crowdin.net/project/acdisplay">协助翻译</a>与<a href="HTTPs://plus.google.com/102696863054832206920/posts/7wi3WfWGSfH">捐赠我</a>的朋友。
-]]></string>
-  <string name="help">帮助</string>
-  <string name="help_faq">常见问题</string>
-  <string name="news_message"><![CDATA[
-欢迎使用新版 AcDisplay！
-本次更新带来了全新且独特的设计。
-设计更为精简，旨在为您提供最佳的体验！<br/>
-<br/>
-<b>一触即发</b><br/>
-解锁设备、检查通知并对其操作皆仅需一次操作。<br/>
-<br/>
-<b>轻松解锁</b><br/>
-从任何空白处滑动皆可完成解锁操作。
-]]></string>
-  <string name="speech_message"><![CDATA[
-您好<br/>
-首先我要感谢您在 Play 商店中下载并且给予本应用好评。
-AcDisplay 有了质的飞跃，若缺少社群的帮助是走不到今天的。AcDisplay 是一款<a href="https://www.github.com/AChep/AcDisplay">开源应用</a>。但是我需要您的帮助。<br/>
-这是我最后一学年，我希望能够买一台笔记本以帮助我未来求学及开发更多美好的程序，我非常感谢您的帮助。
-我将衷心感谢您的帮助。
-]]></string>
+  <string name="about_dialog_message"><![CDATA[AcDisplay 是一个自由和 <a href="http://repo.acdisplay.org"> 开放源码</a> 的应用程序。版权所有 2013-%2$s <a href="http://artemchep.com"> Artem Chepurnoy </a>版权所有<br/><br/> 感谢如下开源工具：%1$s并向所有<a href="http://translate.acdisplay.org">协助翻译</a>和捐赠我们的朋友致以最真挚的感谢。]]></string>
+  <string name="donate_dialog_title">捐赠作者</string>
+  <string name="donate_dialog_message">AcDisplay 是一个自由和开源应用。您可以通过捐赠来表达您的感激并支持开发：</string>
+  <string name="donate_alert_no_responsibility">注意：谷歌不对此付款方式负责。</string>
+  <string name="donate_billing_not_supported">本设备不支持应用内购买</string>
+  <string name="donate_thanks">非常感谢您！</string>
+  <string name="donation_1">一支冰淇淋</string>
+  <string name="donation_4">一杯咖啡</string>
+  <string name="donation_10">几天电费</string>
+  <string name="donation_20">一个舒适的枕头</string>
+  <string name="donation_50">一块固态硬盘</string>
+  <string name="donation_99">一套音响系统</string>
+  <string name="cry_dialog_title">支持开发</string>
+  <string name="cry_dialog_message"><![CDATA[AcDisplay 是一款自由且 <a href="http://repo.acdisplay.org"> 开放源码</a> 的应用程序。我们为此花费大量的时间和资源，为了让它可以日臻完善，请考虑给我们捐赠以表达你的谢意，并支持进一步开发。]]></string>
+  <string name="help_dialog_title">帮助</string>
+  <string name="feedback_dialog_title">反馈</string>
+  <string name="feedback_dialog_message_hint">您的消息将自动包含设备信息。</string>
+  <string name="feedback_dialog_attach_log">附加日志</string>
+  <string name="feedback_dialog_read_help">常见问题</string>
+  <string name="feedback_error_no_app">尚未安装电子邮件应用</string>
+  <string name="feedback_error_msg_too_short">消息必须包含至少 %1$d 个字符</string>
+  <string name="feedback_error_accessing_log">访问应用程序的日志时出错。该错误是：%1$s</string>
+  <string name="compat_dialog_title">兼容模式</string>
+  <string name="compat_dialog_message">AcDisplay 运行在兼容模式之下以支持 Android %1$s：%2$s</string>
+  <string name="compat_dialog_item_notification">因为 AcDisplay 所使用的辅助功能服务无法检测通知是否被消失、更新或是从通知抽屉中滑除。</string>
+  <string name="compat_dialog_item_immersive_mode">总是显示导航栏</string>
+  <string name="compat_dialog_item_music_widget">无音乐小部件</string>
+  <string name="error_dialog_title">出错了</string>
+  <string name="error_dialog_custom_widget_lg"><![CDATA[由于 LG 的软件错误导致无法设置桌面小部件，
+<a href="https://github.com/AChep/AcDisplay/issues/76">了解详情</a>。]]></string>
 </resources>

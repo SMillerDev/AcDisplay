@@ -20,12 +20,34 @@
   -->
 <resources>
   <string-array name="feedback_types">
-    <item>Error</item>
+    <item>Problema</item>
     <item>Sugerencia</item>
     <item>Otro</item>
   </string-array>
   <string-array name="dynamic_background">
     <item>Ilustración</item>
     <item>Icono de notificación</item>
+  </string-array>
+  <string-array name="privacy_mode">
+    <item>Ocultar el contenido de las notificaciones</item>
+    <item>Ocultar las acciones de las notificaciones</item>
+  </string-array>
+  <string-array name="notify_priorities">
+    <item>Urgente y crítico (Llamadas perdidas, direcciones, alertas de emergencia)</item>
+    <item>Importante (Comunicaciones, correo importante)</item>
+    <item>Normal (+notificaciones de aplicaciones antiguas)</item>
+    <item>Sin importancia (actualizaciones de software, correo no deseado)</item>
+    <item>Informaciones e información de fondo (Clima, eventos expirados, sugerencias)</item>
+  </string-array>
+  <string-array name="corners_actions">
+    <item>Desbloquear</item>
+    <item>Iniciar la camara </item>
+    <item>Iniciar el telefono</item>
+  </string-array>
+  <string-array name="keyguard_lock_delay">
+    <item>No delay</item>
+    <item>5 seconds</item>
+    <item>15 seconds</item>
+    <item>30 seconds</item>
   </string-array>
 </resources>

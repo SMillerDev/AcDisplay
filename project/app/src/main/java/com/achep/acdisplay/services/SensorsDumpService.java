@@ -16,7 +16,6 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA  02110-1301, USA.
  */
-
 package com.achep.acdisplay.services;
 
 import android.content.BroadcastReceiver;
@@ -32,14 +31,16 @@ import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.achep.acdisplay.Build;
 import com.achep.acdisplay.Config;
 import com.achep.acdisplay.R;
-import com.achep.acdisplay.utils.FileUtils;
-import com.achep.acdisplay.utils.PowerUtils;
+import com.achep.base.AppHeap;
+import com.achep.base.utils.FileUtils;
+import com.achep.base.utils.power.PowerUtils;
 
 import java.io.File;
 import java.util.LinkedList;
+
+import static com.achep.base.Build.DEBUG;
 
 /**
  * Created by achep on 24.08.14.
@@ -55,11 +56,12 @@ public class SensorsDumpService extends BathService.ChildService implements
     private static final int MAX_SIZE = 2500;
 
     private SensorManager mSensorManager;
-    private final int[] mSensorTypes = new int[] {
-        Sensor.TYPE_GYROSCOPE, Sensor.TYPE_ACCELEROMETER,
+    private final int[] mSensorTypes = new int[]{
+            Sensor.TYPE_GYROSCOPE, Sensor.TYPE_ACCELEROMETER,
     };
 
     private final LinkedList<Event> mEventList = new LinkedList<>();
+
     private static class Event {
         long timestamp;
         float[] values;
@@ -130,6 +132,9 @@ public class SensorsDumpService extends BathService.ChildService implements
     public void onDestroy() {
         getContext().unregisterReceiver(mReceiver);
         stopListening();
+
+        // Watch for the leaks
+        AppHeap.getRefWatcher().watch(this);
     }
 
     @Override
@@ -141,21 +146,21 @@ public class SensorsDumpService extends BathService.ChildService implements
         for (int type : mSensorTypes) {
             Sensor sensor = mSensorManager.getDefaultSensor(type);
             if (sensor != null) {
-                if (Build.DEBUG) Log.d(TAG, "Listening to " + sensor.getName() + " sensor...");
+                if (DEBUG) Log.d(TAG, "Listening to " + sensor.getName() + " sensor...");
                 mSensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_GAME);
             }
         }
     }
 
     private void stopListening() {
-        if (Build.DEBUG) Log.d(TAG, "Stopping listening...");
+        if (DEBUG) Log.d(TAG, "Stopping listening...");
         mSensorManager.unregisterListener(this);
         mHandler.removeCallbacksAndMessages(null);
     }
 
     private void dropToStorage() {
         synchronized (mEventList) {
-            if (Build.DEBUG) Log.d(TAG, "Dumping sensors data to file...");
+            if (DEBUG) Log.d(TAG, "Dumping sensors data to file...");
             if (mEventList.size() == 0) {
                 return;
             }

@@ -20,12 +20,35 @@
   -->
 <resources>
   <string-array name="feedback_types">
-    <item>Hata</item>
+    <item>Sorun</item>
     <item>Öneri</item>
     <item>Diğer</item>
   </string-array>
   <string-array name="dynamic_background">
     <item>Görsellik</item>
     <item>Bildirim simgesi</item>
+  </string-array>
+  <string-array name="privacy_mode">
+    <item>Bildirimlerin içeriğini gizle</item>
+    <item>Bildirim eylemlerini gizle</item>
+  </string-array>
+  <string-array name="notify_priorities">
+    <item>Kritik ve acil (cevapsız aramalar, yönergeler, acil durum uyarıları) 
+</item>
+    <item>Önemli (konuşmalar,  önemli mail)</item>
+    <item>Normal (+eski uygulamalardan bildirimler)</item>
+    <item>Önemsiz (uygulama güncellemeleri, gereksiz mailler)</item>
+    <item>İçerik ve arka plan bilgisi (Hava, süresi dolmuş olaylar, öneriler)</item>
+  </string-array>
+  <string-array name="corners_actions">
+    <item>Kilidi Aç</item>
+    <item>Kamerayı Başlat</item>
+    <item>Arama Yap</item>
+  </string-array>
+  <string-array name="keyguard_lock_delay">
+    <item>No delay</item>
+    <item>5 seconds</item>
+    <item>15 seconds</item>
+    <item>30 seconds</item>
   </string-array>
 </resources>

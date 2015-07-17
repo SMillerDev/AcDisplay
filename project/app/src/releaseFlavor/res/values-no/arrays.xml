@@ -20,12 +20,34 @@
   -->
 <resources>
   <string-array name="feedback_types">
-    <item>Bug</item>
-    <item>Suggestion</item>
-    <item>Other</item>
+    <item>Problem</item>
+    <item>Forslag</item>
+    <item>Annet</item>
   </string-array>
   <string-array name="dynamic_background">
-    <item>Artwork</item>
-    <item>Notification icon</item>
+    <item>Vis cover</item>
+    <item>Varslings-ikon</item>
+  </string-array>
+  <string-array name="privacy_mode">
+    <item>Skjule meldingenes innhold</item>
+    <item>Skjule meldingenes handlinger</item>
+  </string-array>
+  <string-array name="notify_priorities">
+    <item>Kritisk og viktig (tapte samtaler, retningslinjer, nød-varsler)</item>
+    <item>Viktig (kommunikasjon, viktig mail)</item>
+    <item>Normal (+varslinger fra eldre apper)</item>
+    <item>Uviktige (program-oppdateringer, søppel-epost)</item>
+    <item>Kontekst og bakgrunns-info (vær, utløpte avtaler, forslag)</item>
+  </string-array>
+  <string-array name="corners_actions">
+    <item>Lås opp</item>
+    <item>Åpne kamera</item>
+    <item>Åpne ringeapp</item>
+  </string-array>
+  <string-array name="keyguard_lock_delay">
+    <item>No delay</item>
+    <item>5 seconds</item>
+    <item>15 seconds</item>
+    <item>30 seconds</item>
   </string-array>
 </resources>

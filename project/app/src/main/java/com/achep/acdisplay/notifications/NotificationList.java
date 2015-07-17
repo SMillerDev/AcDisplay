@@ -16,11 +16,12 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA  02110-1301, USA.
  */
-
 package com.achep.acdisplay.notifications;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
+import com.achep.base.interfaces.IOnLowMemory;
 
 import java.util.ArrayList;
 
@@ -29,22 +30,18 @@ import java.util.ArrayList;
  * an ability to easily add / replace / remove item from the list.
  *
  * @author Artem Chepurnoy
- * @see NotificationUtils#hasIdenticalIds(OpenNotification, OpenNotification)
  */
-final class NotificationList {
+final class NotificationList extends ArrayList<OpenNotification> implements IOnLowMemory {
 
     /**
-     * Default return value of {@link #push(OpenNotification)}
-     * or {@link #remove(OpenNotification)} methods.
+     * Default return value of {@link #pushNotification(OpenNotification)}
+     * or {@link #removeNotification(OpenNotification)} methods.
      */
-    public static final int RESULT_DEFAULT = 0;
+    private static final int RESULT_DEFAULT = 0;
 
     private static final int EVENT_ADDED = 0;
     private static final int EVENT_CHANGED = 1;
     private static final int EVENT_REMOVED = 2;
-
-    @NonNull
-    private ArrayList<OpenNotification> mList;
 
     @Nullable
     private OnNotificationListChangedListener mListener;
@@ -52,7 +49,15 @@ final class NotificationList {
     /**
      * @see #setMaximumSize(int)
      */
-    private int mMaximumSize = Integer.MAX_VALUE;
+    private volatile int mMaximumSize = Integer.MAX_VALUE;
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onLowMemory() {
+        for (OpenNotification n : this) n.onLowMemory();
+    }
 
     /**
      * Interface definition for a callback to be invoked
@@ -65,7 +70,7 @@ final class NotificationList {
          *
          * @param n newly added notification
          */
-        public int onNotificationAdded(@NonNull OpenNotification n);
+        int onNotificationAdded(@NonNull OpenNotification n);
 
         /**
          * Called when old notification was replaced with new one.
@@ -73,14 +78,14 @@ final class NotificationList {
          * @param n   newly added notification
          * @param old removed notification
          */
-        public int onNotificationChanged(@NonNull OpenNotification n, @NonNull OpenNotification old);
+        int onNotificationChanged(@NonNull OpenNotification n, @NonNull OpenNotification old);
 
         /**
          * Called when notification was removed from list.
          *
          * @param n removed notification
          */
-        public int onNotificationRemoved(@NonNull OpenNotification n);
+        int onNotificationRemoved(@NonNull OpenNotification n);
 
     }
 
@@ -92,7 +97,6 @@ final class NotificationList {
      */
     public NotificationList(@Nullable OnNotificationListChangedListener listener) {
         mListener = listener;
-        mList = new ArrayList<>(10);
     }
 
     /**
@@ -108,24 +112,8 @@ final class NotificationList {
         mMaximumSize = maxSize;
     }
 
-    public int pushOrRemove(OpenNotification n, boolean push, boolean silently) {
-        if (silently) {
-            // Hide listener.
-            OnNotificationListChangedListener l = mListener;
-            mListener = null;
-
-            // Perform action.
-            pushOrRemove(n, push);
-
-            // Restore listener.
-            mListener = l;
-            return RESULT_DEFAULT;
-        }
-        return pushOrRemove(n, push);
-    }
-
-    public int pushOrRemove(OpenNotification n, boolean push) {
-        return push ? push(n) : remove(n);
+    int pushOrRemoveNotification(@NonNull OpenNotification n, boolean push) {
+        return push ? pushNotification(n) : removeNotification(n);
     }
 
     /**
@@ -134,60 +122,53 @@ final class NotificationList {
      * @return {@link NotificationList.OnNotificationListChangedListener#onNotificationAdded(OpenNotification n)} or
      * {@link NotificationList.OnNotificationListChangedListener#onNotificationChanged(OpenNotification n, OpenNotification old)}
      */
-    public int push(OpenNotification n) {
-        final int index = indexOf(n);
+    int pushNotification(@NonNull OpenNotification n) {
+        return pushNotification(n, true);
+    }
+
+    int pushNotification(@NonNull OpenNotification n, boolean www) {
+        final int index = indexOfNotification(n);
         if (index == -1) {
-            if (mList.size() > mMaximumSize) {
-                remove(mList.get(0));
+            if (size() > mMaximumSize) {
+                remove(0);
             }
 
             // Add new notification to the list.
-            mList.add(n);
+            add(n);
             return notifyListener(EVENT_ADDED, n, null);
-        } else {
+        } else if (www) {
             // Replace old notification with new one.
-            OpenNotification old = mList.get(index);
-            mList.remove(index);
-            mList.add(index, n);
+            OpenNotification old = remove(index);
+            add(index, n);
             return notifyListener(EVENT_CHANGED, n, old);
         }
+        return RESULT_DEFAULT;
     }
 
     /**
      * Removes notification from the list.
      *
      * @return {@link NotificationList.OnNotificationListChangedListener#onNotificationRemoved(OpenNotification n)}
-     * @see #push(OpenNotification n)
+     * @see #pushNotification(OpenNotification n)
      */
-    public int remove(OpenNotification n) {
-        final int index = indexOf(n);
-        if (index != -1) {
-            OpenNotification old = mList.get(index);
-            mList.remove(index);
-            return notifyListener(EVENT_REMOVED, old, null);
-        }
-        return RESULT_DEFAULT;
+    int removeNotification(@NonNull OpenNotification n) {
+        final int index = indexOfNotification(n);
+        return index != -1 ? removeNotification(index) : RESULT_DEFAULT;
+    }
+
+    int removeNotification(int index) {
+        OpenNotification old = remove(index);
+        return notifyListener(EVENT_REMOVED, old, null);
     }
 
     /**
-     * <b>Do not operate on this list!</b>
-     * Use this only for searching and getting notifications.
-     *
-     * @return link to primitive list of notifications.
+     * @return the position of given {@link OpenNotification} in list, or {@code -1} if not found.
+     * @see NotificationUtils#hasIdenticalIds(OpenNotification, OpenNotification)
      */
-    @NonNull
-    public ArrayList<OpenNotification> list() {
-        return mList;
-    }
-
-    /**
-     * @return the position of given {@link OpenNotification} in
-     * {@link #mList list}, or {@code -1} if not found.
-     */
-    public int indexOf(@NonNull OpenNotification n) {
-        final int size = mList.size();
+    int indexOfNotification(@NonNull OpenNotification n) {
+        final int size = size();
         for (int i = 0; i < size; i++) {
-            if (NotificationUtils.hasIdenticalIds(n, mList.get(i))) {
+            if (NotificationUtils.hasIdenticalIds(n, get(i))) {
                 return i;
             }
         }
@@ -201,7 +182,7 @@ final class NotificationList {
      * @see #EVENT_CHANGED
      * @see #EVENT_REMOVED
      */
-    private int notifyListener(int event, @NonNull OpenNotification n, OpenNotification old) {
+    private int notifyListener(final int event, @NonNull OpenNotification n, OpenNotification old) {
         if (mListener == null) return RESULT_DEFAULT;
         switch (event) {
             case EVENT_ADDED:

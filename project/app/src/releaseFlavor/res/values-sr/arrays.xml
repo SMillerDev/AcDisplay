@@ -20,12 +20,34 @@
   -->
 <resources>
   <string-array name="feedback_types">
-    <item>Problem</item>
-    <item>Prijedlozi</item>
-    <item>Ostalo</item>
+    <item>Проблем</item>
+    <item>Предлог</item>
+    <item>Остало</item>
   </string-array>
   <string-array name="dynamic_background">
-    <item>Artwork</item>
-    <item>Notification icon</item>
+    <item>Насловна страна албума</item>
+    <item>Иконица обавештења</item>
+  </string-array>
+  <string-array name="privacy_mode">
+    <item>Не приказуј садржај обавештења</item>
+    <item>Не приказуј додатне опције обавештења</item>
+  </string-array>
+  <string-array name="notify_priorities">
+    <item>Критично и хитно (пропуштени позиви, инструкције, хитна упозорења)</item>
+    <item>Важно (комуникација, важна пошта)</item>
+    <item>Нормално (укључујући обавештења од старих апликација)</item>
+    <item>Неважно (ажурирање апликација, отпадна пошта)</item>
+    <item>Додатне и позадинске информације (временска прогноза, прошли догађаји, предлози)</item>
+  </string-array>
+  <string-array name="corners_actions">
+    <item>Откључај</item>
+    <item>Покрени камеру</item>
+    <item>Покрени бројчаник</item>
+  </string-array>
+  <string-array name="keyguard_lock_delay">
+    <item>No delay</item>
+    <item>5 seconds</item>
+    <item>15 seconds</item>
+    <item>30 seconds</item>
   </string-array>
 </resources>

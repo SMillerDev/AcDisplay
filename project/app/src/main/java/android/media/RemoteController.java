@@ -23,7 +23,13 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.view.KeyEvent;
 
+/*
+    This is needed to avoid of exceptions on
+    pre-KitKat platforms.
+ */
 public class RemoteController {
+
+    public static final int POSITION_SYNCHRONIZATION_CHECK = 1;
 
     public RemoteController(Context context, OnClientUpdateListener l) {
         throw new RuntimeException("Shit happened!");
@@ -33,7 +39,21 @@ public class RemoteController {
         return false;
     }
 
-    public boolean sendMediaKeyEvent(KeyEvent keyEvent) { return true; }
+    public boolean sendMediaKeyEvent(KeyEvent keyEvent) {
+        return true;
+    }
+
+    public boolean setSynchronizationMode(int mode) {
+        return true;
+    }
+
+    public boolean seekTo(long pos) {
+        return true;
+    }
+
+    public long getEstimatedMediaPosition() {
+        return 0L;
+    }
 
     public class MetadataEditor {
 
@@ -53,15 +73,15 @@ public class RemoteController {
 
     public interface OnClientUpdateListener {
 
-        public void onClientChange(boolean clearing);
+        void onClientChange(boolean clearing);
 
-        public void onClientMetadataUpdate(RemoteController.MetadataEditor metadataEditor);
+        void onClientMetadataUpdate(RemoteController.MetadataEditor metadataEditor);
 
-        public void onClientPlaybackStateUpdate(int state, long stateChangeTimeMs, long currentPosMs, float speed);
+        void onClientPlaybackStateUpdate(int state, long stateChangeTimeMs, long currentPosMs, float speed);
 
-        public void onClientPlaybackStateUpdate(int state);
+        void onClientPlaybackStateUpdate(int state);
 
-        public void onClientTransportControlUpdate(int transportControlFlags);
+        void onClientTransportControlUpdate(int transportControlFlags);
 
     }
 }

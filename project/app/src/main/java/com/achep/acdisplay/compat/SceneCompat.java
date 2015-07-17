@@ -16,14 +16,16 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA  02110-1301, USA.
  */
-
 package com.achep.acdisplay.compat;
 
-import android.annotation.SuppressLint;
 import android.transition.Scene;
+import android.util.Log;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 
-import com.achep.acdisplay.Device;
+import com.achep.base.Device;
+
+import static com.achep.base.Build.DEBUG;
 
 /**
  * This is a restricted {@link android.transition.Scene} compatibility
@@ -31,31 +33,44 @@ import com.achep.acdisplay.Device;
  *
  * @author Artem Chepurnoy
  */
-@SuppressLint("NewApi")
 public class SceneCompat {
 
-    private final ViewGroup mViewGroup;
-    private final ViewGroup mView;
-    public Scene scene;
+    private static final String TAG = "SceneCompat";
 
-    public SceneCompat(ViewGroup viewGroup, ViewGroup view) {
+    private final ViewGroup mView;
+    private final ViewGroup mParent;
+    private Scene mScene;
+
+    public SceneCompat(ViewGroup parent, ViewGroup view) {
         if (Device.hasKitKatApi()) {
-            scene = new Scene(viewGroup, view);
+            mScene = new Scene(parent, view);
         }
-        mViewGroup = viewGroup;
+        mParent = parent;
         mView = view;
     }
 
-    public void enter() {
-        if (Device.hasKitKatApi()) {
-            scene.enter();
-        } else {
-            mViewGroup.removeAllViews();
-            mViewGroup.addView(mView);
-        }
+    public Scene getScene() {
+        return mScene;
     }
 
     public ViewGroup getView() {
         return mView;
     }
+
+    public void enter() {
+        if (Device.hasKitKatApi()) {
+            // FIXME: This is a workaround that more research.
+            ViewParent vp = mView.getParent();
+            if (vp != null) {
+                if (DEBUG) Log.d(TAG, "Removing the view[" + mView + "] from [" + vp + "]!");
+                ((ViewGroup) vp).removeView(mView);
+            }
+
+            mScene.enter();
+        } else {
+            mParent.removeAllViews();
+            mParent.addView(mView);
+        }
+    }
+
 }

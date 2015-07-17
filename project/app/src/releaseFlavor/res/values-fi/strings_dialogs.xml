@@ -19,33 +19,46 @@
   ~ MA  02110-1301, USA.
   -->
 <resources>
-  <string name="close">Sulje</string>
-  <string name="about_action">Tietoja</string>
-  <string name="about_message"><![CDATA[
-        tekijänoikeus 2013-2014 <a href="https://plus.google.com/+АртёмЧепурной">Artem Chepurnoy</a>. Kaikki oikeudet pidätetään.<br/>
-        <br/>
-        Kiitokset näille avoimen lähdekoodin työkaluille: %1$s ja kaikille jotka
-        <a href="http://translate.acdisplay.org">auttoivat kääntämisessä</a> tai
-        <a href="https://plus.google.com/102696863054832206920/posts/7wi3WfWGSfH">lahjoittivat minulle</a>.
+  <string name="about_dialog_message"><![CDATA[
+        AcDisplay on ilmainen ja <a href="http://repo.acdisplay.org"> avoimen lähdekoodin</a>sovellus.
+        Tekijänoikeus 2013-%2$s<a href="http://artemchep.com">Artem Chepurnoy</a>. Kaikki oikeudet pidätetään.<br/>
+        <br/>
+        Suuret kiitokset avoimen lähdekoodin työkaluille:%1$s ja kaikille jotka
+        <a href="http://translate.acdisplay.org">auttoivat käännöksissä</a> tai lahjoittivat.
     ]]></string>
-  <string name="help">Apua</string>
-  <string name="help_faq">Usein kysytyt kysymykset</string>
-  <string name="news_message"><![CDATA[
-        Tervetuloa AcDisplayn uuteen versioon!
-        Tämä päivitys tuo täysin uuden ja uniikin ulkoasun ja paljon uusia mahdollisuuksia.
-        Ulkoasu on virtaviivaisempi ja se on suunnattu antamaan paras mahdollinen käyttökokemus!<br/>
-        <br/>
-        <b>Yksi ele kaikille toiminnoille.</b><br/>
-        Lukituksen poisto, ilmoitusten tarkistus ja niiden hallinta voidaan kaikki tehdä yhdellä eleellä.<br/>
-        <br/>
-        <b>Lukituksen avaus on kaikkialla.</b><br/>
-        Pyyhkäise missä tahansa vapaassa tilassa avataksesi lukituksen.
+  <string name="donate_dialog_title">Lahjoita kehittäjille</string>
+  <string name="donate_dialog_message">AcDisplay on ilmainen avoimen lähdekoodin sovellus. Voit näyttää arvostuksesi ja tukea kehitystä lahjoittamalla:</string>
+  <string name="donate_alert_no_responsibility">Huomaa että Google ei ole vastuussa tästä maksutavasta.</string>
+  <string name="donate_billing_not_supported">Sovellusten sisäisiä ostoksia ei tueta tällä laitteella.</string>
+  <string name="donate_thanks">Kiitos paljon!</string>
+  <string name="donation_1">Jäätelöä</string>
+  <string name="donation_4">Kuppia kahvia</string>
+  <string name="donation_10">Sähkölaskut</string>
+  <string name="donation_20">Sopiva tyyny</string>
+  <string name="donation_50">SSD-levy</string>
+  <string name="donation_99">Äänijärjestelmä</string>
+  <string name="cry_dialog_title">Tue kehitystä</string>
+  <string name="cry_dialog_message"><![CDATA[
+        AcDisplay on ilmainen <a href="http://repo.acdisplay.org">avoimen lähdekoodin</a> sovellus ja
+        käytämme paljon aikaa ja resursseja sen ajan tasalla pitämiseen. Harkitse lahjoittamista
+        näyttääksesi kiitollisuutesi ja edistääksesi sen kehittämistä.
     ]]></string>
-  <string name="speech_message"><![CDATA[
-        Hei,<br/>
-        Aluksi haluan kiittää kaikkia suuresta latausmäärästä ja hyvistä arvosteluista Play Kaupassa.
-        AcDisplayssa on tapahtunut paljon edistystä ja se ei olisi ollut mahdollista ilman yhteisöä. Siksi AcDisplay on <a href="https://www.github.com/AChep/AcDisplay">avoin</a> kaikille. Mutta tarvitsen teidän apuanne.<br/>
-        Tämä on viimeinen kouluvuoteni ja haluaisin ostaa kannettavan tulevia opintoja varten ja jotta voin luoda mahtavia ohjelmia missä tahansa olenkin. 
-        Arvostaisin apuasi sen kanssa.
-    ]]></string>
+  <string name="help_dialog_title">Apua</string>
+  <string name="feedback_dialog_title">Palaute</string>
+  <string name="feedback_dialog_message_hint">Viestisi. Laitteen tiedot sisällytetään automaattisesti.</string>
+  <string name="feedback_dialog_attach_log">Liitä loki</string>
+  <string name="feedback_dialog_read_help">Usein kysyttyjä kysymyksiä</string>
+  <string name="feedback_error_no_app">Asenna jokin sähköposti-sovellus.</string>
+  <string name="feedback_error_msg_too_short">Viestissä on oltava vähintään %1$d merkkiä.</string>
+  <string name="feedback_error_accessing_log">Virhe sovelluksen lokiin pääsyssä. Virhe on: %1$s</string>
+  <string name="compat_dialog_title">Yhteensopivuustila</string>
+  <string name="compat_dialog_message">AcDisplay suoritetaan yhteensopivuustilassa jotta tuetaan Android %1$s: %2$s</string>
+  <string name="compat_dialog_item_notification">Koska AcDisplay käyttää esteettömyyspalvelua, se ei voi havaita ilmoitusten sulkemisia/päivityksiä, tai ohittaa ilmoituksia ilmoitusvalikosta.</string>
+  <string name="compat_dialog_item_immersive_mode">Navigointipalkki on aina näkyvissä.</string>
+  <string name="compat_dialog_item_music_widget">Ei musiikki-widgettiä.</string>
+  <string name="error_dialog_title">Jotain meni pieleen</string>
+  <string name="error_dialog_custom_widget_lg"><![CDATA[
+        LG:n ohjelmiston virheen takia mukautettua widgettiä ei voida asettaa.
+        <a href="https://github.com/AChep/AcDisplay/issues/76">Lue lisää</a>.
+    ]]></string>
 </resources>

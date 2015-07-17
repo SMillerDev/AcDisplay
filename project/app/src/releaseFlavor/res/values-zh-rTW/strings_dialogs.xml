@@ -19,31 +19,42 @@
   ~ MA  02110-1301, USA.
   -->
 <resources>
-  <string name="close">關閉</string>
-  <string name="about_action">關於</string>
-  <string name="about_message"><![CDATA[
-Copyright © 2013-2014 <a href="https://plus.google.com/+АртёмЧепурной">Artem Chepurnoy</a>. 保留一切權利。<br/>
-<br/>
-感謝那些開源工具：%1$s，和所有<a href="HTTPs://crowdin.net/project/acdisplay"> 幫忙翻譯</a>和<a href="HTTPs://plus.google.com/102696863054832206920/posts/7wi3WfWGSfH">捐贈給我</a>的人。
-]]></string>
-  <string name="help">幫助</string>
-  <string name="help_faq">常見問題</string>
-  <string name="news_message"><![CDATA[
-        歡迎使用新版 AcDisplay！
-        本次更新帶來全新的介面設計和更多未來遠景。
-        新設計有著更簡便的操作，將帶給您最方便的體驗！<br/>
+  <string name="about_dialog_message"><![CDATA[
+        AcDisplay 是免費且<a href="http://repo.acdisplay.org">開放原始碼</a>的應用程式。Copyright 2013-%2$s <a href="http://artemchep.com">Artem Chepurnoy</a>. All Rights Reserved.<br/>
         <br/>
-        <b>點一下完成所有操作</b><br/>
-        解鎖裝置，查看通知或執行操作將僅需要點一下便完成<br/>
-        <br/>
-        <b>到處都可以解鎖螢幕</b><br/>
-        在畫面空曠處滑動便可以解鎖螢幕
+        誠摯感謝下列開放原始碼工具：%1$s，以及所有<a href="http://translate.acdisplay.org">協助翻譯</a>或提供贊助的使用者。
     ]]></string>
-  <string name="speech_message"><![CDATA[
-        Hello,<br/>
-        首先我要感謝各位支持下載並給予 AcDisplay 好評。
-        至今 AcDisplay 已有著長足的進展，若缺少社群的幫助是走不到今天的。這是 AcDisplay 是<a href="https://www.github.com/AChep/AcDisplay">開放</a>給所有人的。但我還需要您的些許幫助<br/>
-        我今年即將畢業。而我想要買台筆電協助我未來求學及開發更多美好的程式
-        我將非常感激您的幫助
+  <string name="donate_dialog_title">贊助開發人員</string>
+  <string name="donate_dialog_message">AcDisplay 是免費且開放原始碼的應用程式，您可以透過贊助表示感謝與支持：</string>
+  <string name="donate_alert_no_responsibility">請注意，Google 對此付款方式不負任何責任。</string>
+  <string name="donate_billing_not_supported">您的裝置不支援應用程式內購買功能。</string>
+  <string name="donate_thanks">非常感謝！</string>
+  <string name="donation_1">一球冰淇淋</string>
+  <string name="donation_4">一杯咖啡</string>
+  <string name="donation_10">電費帳單</string>
+  <string name="donation_20">舒服的枕頭</string>
+  <string name="donation_50">固態硬碟</string>
+  <string name="donation_99">音響系統</string>
+  <string name="cry_dialog_title">支持開發作業</string>
+  <string name="cry_dialog_message"><![CDATA[
+        AcDisplay 是免費且<a href="http://repo.acdisplay.org">開放原始碼</a>的應用程式，我們需耗費大量時間與資源才能即時予以維護。請您考慮透過贊助表示感謝，並支持更進一步的開發作業。 
     ]]></string>
+  <string name="help_dialog_title">説明</string>
+  <string name="feedback_dialog_title">意見回饋</string>
+  <string name="feedback_dialog_message_hint">請輸入您的訊息。系統會自動附上裝置規格。</string>
+  <string name="feedback_dialog_attach_log">附上紀錄檔</string>
+  <string name="feedback_dialog_read_help">常見問題</string>
+  <string name="feedback_error_no_app">請安裝電子郵件應用程式。</string>
+  <string name="feedback_error_msg_too_short">訊息必須包含至少 %1$d 個字元。</string>
+  <string name="feedback_error_accessing_log">存取應用程式紀錄檔時發生錯誤，錯誤內容為：%1$s</string>
+  <string name="compat_dialog_title">相容性模式</string>
+  <string name="compat_dialog_message">為支援 Android %1$s: %2$s，AcDisplay 正在相容性模式下執行</string>
+  <string name="compat_dialog_item_notification">AcDisplay 正在使用協助工具服務，因此無法偵測已忽略或更新的通知，或是關閉通知列表中的通知。</string>
+  <string name="compat_dialog_item_immersive_mode">一律顯示導航列</string>
+  <string name="compat_dialog_item_music_widget">找不到音樂小工具。</string>
+  <string name="error_dialog_title">出了些差錯</string>
+  <string name="error_dialog_custom_widget_lg"><![CDATA[
+        由於一個由 LG 造成的軟體錯誤，自訂小工具無法啟用。
+        <a href="https://github.com/AChep/AcDisplay/issues/76">了解更多</a>
+    ]]></string>
 </resources>

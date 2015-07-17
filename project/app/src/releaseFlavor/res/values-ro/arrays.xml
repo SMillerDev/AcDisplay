@@ -20,12 +20,34 @@
   -->
 <resources>
   <string-array name="feedback_types">
-    <item>Bug</item>
+    <item>Problema</item>
     <item>Sugestie</item>
     <item>Altele</item>
   </string-array>
   <string-array name="dynamic_background">
-    <item>Capodopera</item>
+    <item>Coperta album</item>
     <item>Pictograma notificare</item>
+  </string-array>
+  <string-array name="privacy_mode">
+    <item>Ascunde conținut notificare</item>
+    <item>Ascunde acțiuni notificare</item>
+  </string-array>
+  <string-array name="notify_priorities">
+    <item>Urgente și critice (apeluri pierdute, direcții, alerte de urgență)</item>
+    <item>Importante (comunicații, mail important)</item>
+    <item>Normal (+notificări de la aplicații vechi)</item>
+    <item>Neimportante (actualizări software, mail spam)</item>
+    <item>Informații contextuale și de fond (vreme, evenimente trecute, sugestii)</item>
+  </string-array>
+  <string-array name="corners_actions">
+    <item>Unlock</item>
+    <item>Launch camera</item>
+    <item>Launch dialer</item>
+  </string-array>
+  <string-array name="keyguard_lock_delay">
+    <item>No delay</item>
+    <item>5 seconds</item>
+    <item>15 seconds</item>
+    <item>30 seconds</item>
   </string-array>
 </resources>

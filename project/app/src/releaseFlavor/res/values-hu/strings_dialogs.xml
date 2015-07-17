@@ -19,33 +19,46 @@
   ~ MA  02110-1301, USA.
   -->
 <resources>
-  <string name="close">Bezárás</string>
-  <string name="about_action">Névjegy</string>
-  <string name="about_message"><![CDATA[
-        Szerzői Jog 2013-2014 <a href="https://plus.google.com/+АртёмЧепурной">Artem Chepurnoy</a>. Minden Jog Fenntartva.<br/>
+  <string name="about_dialog_message"><![CDATA[
+        AcDisplay egy ingyenes és <a href="http://repo.acdisplay.org">nyílt forráskódú</a> alkalmazás.
+        Szerzői jog 2013-%2$s <a href="http://artemchep.com">Artem Chepurnoy</a>. Minden jog fenntartva.<br/>
         <br/>
         Köszönet a következő nyílt forrású eszközöknek: %1$s és mindenkinek, aki
-        <a href="http://translate.acdisplay.org">segített a fordításban</a> vagy
-        <a href="https://plus.google.com/102696863054832206920/posts/7wi3WfWGSfH">adományozott nekem</a>.
+        <a href="http://translate.acdisplay.org">segített a fordításban</a> vagy adományozott.
     ]]></string>
-  <string name="help">Súgó</string>
-  <string name="help_faq">Gyakran ismételt kérdések</string>
-  <string name="news_message"><![CDATA[
-        Üdvözöllek az AcDisplay új változatában!
-        Ez a frissítés teljesen új és egyedi megjelenést hoz, rengeteg új lehetőséggel.
-        A megjelenés sokkal korszerűbb lett, melynek célja, hogy a lehető legjobb felhasználói élményt nyújtsa!<br/>
-        <br/>
-        <b>Egy érintés minden művelethez</b><br/>
-        Készülék feloldása, értesítések ellenőrzése vagy műveletek végrehajtása rajtuk egyetlen mozdulattal történhet.<br/>
-        <br/>
-        <b>Feloldó mező mindenhol és bárhol.</b><br/>
-        Feloldás bárhol a szabad területen.
+  <string name="donate_dialog_title">Adomány a fejlesztőnek</string>
+  <string name="donate_dialog_message">AcDisplay egy ingyenes és nyílt forráskódú alkalmazás. Adományozással megmutathatja elismerését és támogathatja a fejlesztést:</string>
+  <string name="donate_alert_no_responsibility">Tartsd észben, hogy a Google nem felelős ezért a fizetési módszerért.</string>
+  <string name="donate_billing_not_supported">A készülék nem támogatja az alkalmazáson belüli vásárlásokat.</string>
+  <string name="donate_thanks">Nagyon köszönöm!</string>
+  <string name="donation_1">Egy jégkrém</string>
+  <string name="donation_4">Egy csésze kávé</string>
+  <string name="donation_10">Villany számla</string>
+  <string name="donation_20">Egy megfelelő párna</string>
+  <string name="donation_50">SSD lemez</string>
+  <string name="donation_99">Hangrendszer</string>
+  <string name="cry_dialog_title">Fejlesztés támogatása</string>
+  <string name="cry_dialog_message"><![CDATA[
+        AcDisplay egy ingyenes és <a href="http://repo.acdisplay.org">nyílt forráskódú</a> alkalmazás és mi
+        rengeteg időt és erőforrást fektettünk bele, hogy az is maradjon. Kérjük, fontolja meg az adományozást,
+        megmutatva az elismerését és támogatva a további fejlesztést.
     ]]></string>
-  <string name="speech_message"><![CDATA[
-        Hello,<br/>
-        Először is szeretnék köszönetet mondani a Play Áruház letöltések száma, valamint a pozitív értékelések miatt.
-        Hatalmas előrelépés történt AcDisplay fejlesztésében és ez nem történhetett volna meg a közösség nélkül. Ez az, amiért az AcDisplay <a href="https://www.github.com/AChep/AcDisplay">nyitott</a> mindenki számára. Ugyanakkor némi segítségre lenne szükségem.<br/>
-        Ez az utolsó iskolaévem és egy laptopot szeretnék vásáorlni, a további tanulásom elősegítésére, valamint hogy csodás programokat fejleszthessek továbbra is, bárhova kerüljek is..
-        Segítségedért nagyon hálás lennék.
+  <string name="help_dialog_title">Súgó</string>
+  <string name="feedback_dialog_title">Visszajelzés</string>
+  <string name="feedback_dialog_message_hint">Az üzeneted. A készüléked leírása automatikusan csatolva lesz.</string>
+  <string name="feedback_dialog_attach_log">Hibanapló csatolása</string>
+  <string name="feedback_dialog_read_help">Gyakran ismételt kérdések</string>
+  <string name="feedback_error_no_app">Telepítsen bármilyen e-mail alkalmazást.</string>
+  <string name="feedback_error_msg_too_short">A levélnek minimum %1$d karaktert kell tartalmaznia.</string>
+  <string name="feedback_error_accessing_log">Hiba az alkalmazásnapló hozzáférése során. A hiba: %1$s</string>
+  <string name="compat_dialog_title">Kompatibilitási mód</string>
+  <string name="compat_dialog_message">AcDisplay kompatibilitási módban fut az Android %1$s: %2$s támogatására</string>
+  <string name="compat_dialog_item_notification">Mivel az AcDisplay a kisegítő szolgáltatást használja, nem érzékeli az értesítések elutasítását/frissítését, vagy az értesítések elutasítását az értesítési fiókból.</string>
+  <string name="compat_dialog_item_immersive_mode">Navigációs sáv mindig megjelenik.</string>
+  <string name="compat_dialog_item_music_widget">Nincs zene modul.</string>
+  <string name="error_dialog_title">Valami hiba történt</string>
+  <string name="error_dialog_custom_widget_lg"><![CDATA[
+Egy LG szoftverhiba miatt nem lehet egyéni widgetet beállítani.
+<a href="https://github.com/AChep/AcDisplay/issues/76">További információ a hibáról</a>.
     ]]></string>
 </resources>

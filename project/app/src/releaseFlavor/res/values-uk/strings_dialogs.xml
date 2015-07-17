@@ -19,23 +19,45 @@
   ~ MA  02110-1301, USA.
   -->
 <resources>
-  <string name="close">Закрити</string>
-  <string name="about_action">Про програму</string>
-  <string name="about_message"><![CDATA[
-        Авторське право 2013-2014 <a href="https://plus.google.com/+АртёмЧепурной">Артем Чепурной</a>. Всі права захищені.<br/>
+  <string name="about_dialog_message"><![CDATA[
+        AcDisplay — це безкоштовний додаток з <a href="http://repo.acdisplay.org">відкритим сирцевим кодом</a>.
+        Авторське право 2013-%2$s <a href="http://artemchep.com">Артем Чепурний</a>. Усі права захищені.<br/>
         <br/>
-        Велике дякую цим opensource-інструментам: %1$s та всім тим, хто
-        <a href="http://translate.acdisplay.org">допомагав з перекладами</a> або
-        <a href="https://plus.google.com/102696863054832206920/posts/7wi3WfWGSfH">пожертвував мені</a>.
+        Велике спасибі цим відкритим інструментам: %1$s, а також всім, хто
+        <a href="http://translate.acdisplay.org">допоміг з перекладом додатку</a> чи пожертвував на його розвиток.
     ]]></string>
-  <string name="help">Допомога</string>
-  <string name="help_faq">Запитання та відповіді</string>
-  <string name="news_message"><![CDATA[Ласкаво просимо в нову версію AcDisplay!         Це оновлення приносить абсолютно новий і унікальний дизайн з великою кількістю нових можливостей.         Дизайн більш продуманий і спрямований на надання вам найкращого досвіду в роботі з програмою! <br/>         <br/> <b>Один дотик для всіх дій.</b> <br/>         Розблокування пристрою, перевірка сповіщень або виконання операцій з ними може бути зроблено всього одним жестом. <br/>         <br/> <b>Місце для розблокування є скрізь і всюди.</b> <br/>         Проведіть будь-де на вільному місці щоб розблокувати.     ]]></string>
-  <string name="speech_message"><![CDATA[
-        Hello,<br/>
-        Перш за все я хочу подякувати за велику кількість завантажень та високих оцінок в Play Store.
-        Величезний прогрес AcDisplay був досягнутий і цього не могло б бути без спільноти. Ось чому AcDisplay <a href="https://www.github.com/AChep/AcDisplay">відкритий</a> для кожного. Але я потребую деякої вашої допомоги.<br/>
-        Це мій останній рік навчання в школі і я хотів би придбати ноутбук для майбутніх занять та розробки чудових програм де б я не був.
-        Буду дуже вдячний вашій допомозі з цим.
+  <string name="donate_dialog_title">Пожертвувати</string>
+  <string name="donate_dialog_message">AcDisplay – це безкоштовний додаток з відкритим сирцевим кодом. Ви можете показати свою вдячність, підтримавши розвиток через пожертвування:</string>
+  <string name="donate_alert_no_responsibility">Зверніть увагу, що Google не відповідає за цей метод платежів.</string>
+  <string name="donate_billing_not_supported">Покупки у додатку не підтримуються цим пристроєм.</string>
+  <string name="donate_thanks">Вельми дякую!</string>
+  <string name="donation_1">Морозиво</string>
+  <string name="donation_4">Чашка кави</string>
+  <string name="donation_10">Рахунок за електроенергію</string>
+  <string name="donation_20">Чудова подушка</string>
+  <string name="donation_50">SSD</string>
+  <string name="donation_99">Звукова система</string>
+  <string name="cry_dialog_title">Підтримати розробку</string>
+  <string name="cry_dialog_message"><![CDATA[        AcDisplay це безкоштовна та <a href="http://repo.acdisplay.org">відкрита</a> програма, та ми докладаємо
+        багато зусиль та часу для її підтримки. Будь ласка, розгляньте можливість пожертви аби показати вашу
+        вдячність та допомогти подальшій розробці.
+    ]]></string>
+  <string name="help_dialog_title">Допомога</string>
+  <string name="feedback_dialog_title">Зворотній зв’язок</string>
+  <string name="feedback_dialog_message_hint">Ваше повідомлення. Характеристики пристрою будуть додані автоматично.</string>
+  <string name="feedback_dialog_attach_log">Прикріпити журнал подій</string>
+  <string name="feedback_dialog_read_help">Запитання та відповіді</string>
+  <string name="feedback_error_no_app">Встановіть додаток для відправлення електронної пошти.</string>
+  <string name="feedback_error_msg_too_short">Повідомлення має містити принаймні %1$d символів.</string>
+  <string name="feedback_error_accessing_log">Помилка створення журналу подій. Помилка: %1$s</string>
+  <string name="compat_dialog_title">Режимі сумісності</string>
+  <string name="compat_dialog_message">AcDisplay працює у режимі сумістності для забезпечення підтримки Android %1$s: %2$s</string>
+  <string name="compat_dialog_item_notification">AcDisplay використовує сервіс доступності, через це вона не може визначати змін/відхилень повідомлень чи відхиляти повідомлення з драйверу повідомлень.</string>
+  <string name="compat_dialog_item_immersive_mode">Завжди відображається панель навігації.</string>
+  <string name="compat_dialog_item_music_widget">Немає віджету музики.</string>
+  <string name="error_dialog_title">Щось пішло не так</string>
+  <string name="error_dialog_custom_widget_lg"><![CDATA[
+        Через помилку у програмному забезпеченні пристроїв LG, встановити власний віджет неможливо.
+        <a href="https://github.com/AChep/AcDisplay/issues/76">Доклідніше</a>.
     ]]></string>
 </resources>

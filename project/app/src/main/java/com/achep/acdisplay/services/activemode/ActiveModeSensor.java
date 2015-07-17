@@ -16,23 +16,22 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA  02110-1301, USA.
  */
-
 package com.achep.acdisplay.services.activemode;
 
 import android.content.Context;
 import android.hardware.SensorManager;
-import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.achep.acdisplay.services.activemode.sensors.ProximitySensor;
+import com.achep.base.async.WeakHandler;
 
 import java.util.ArrayList;
 
 /**
- * Provides a callback when {@link com.achep.acdisplay.acdisplay.AcDisplayActivity}
+ * Provides a callback when {@link com.achep.acdisplay.ui.activities.AcDisplayActivity}
  * should be started and stopped.
  *
  * @author Artem Chepurnoy
@@ -55,7 +54,7 @@ public abstract class ActiveModeSensor {
         /**
          * Requests to show the AcDisplay.
          */
-        public void onWakeRequested(@NonNull ActiveModeSensor sensor);
+        void onWakeRequested(@NonNull ActiveModeSensor sensor);
 
     }
 
@@ -96,7 +95,7 @@ public abstract class ActiveModeSensor {
      *
      * @return {@code true} if the sensor is supported by device, {@code false} otherwise.
      */
-    protected boolean isSupported(@NonNull SensorManager sensorManager) {
+    public boolean isSupported(@NonNull SensorManager sensorManager) {
         return sensorManager.getSensorList(getType()).size() > 0;
     }
 
@@ -173,25 +172,31 @@ public abstract class ActiveModeSensor {
 
         private boolean mRunning;
 
-        private final Handler mHandler = new Handler() {
+        private final H mHandler = new H(this);
+
+        private static class H extends WeakHandler<Consuming> {
+
+            public H(@NonNull Consuming object) {
+                super(object);
+            }
+
             @Override
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-                if (mRunning == (msg.what == START)) return;
+            protected void onHandleMassage(@NonNull Consuming c, Message msg) {
+                if (c.mRunning == (msg.what == START)) return;
                 switch (msg.what) {
                     case START:
-                        mRunning = true;
-                        onStart(getSensorManager());
+                        c.mRunning = true;
+                        c.onStart(c.getSensorManager());
                         break;
                     case STOP:
-                        onStop();
-                        mRunning = false;
+                        c.onStop();
+                        c.mRunning = false;
                         break;
                     default:
                         throw new IllegalArgumentException();
                 }
             }
-        };
+        }
 
         /**
          * Specifies how long sensor should be active after receiving
@@ -244,9 +249,27 @@ public abstract class ActiveModeSensor {
         }
 
         public void ping(int remainingTime) {
-            mHandler.sendEmptyMessage(START);
+            start();
             mHandler.removeMessages(STOP);
             mHandler.sendEmptyMessageDelayed(STOP, remainingTime);
+        }
+
+        /**
+         * Starts the consuming sensor 'forever'.
+         *
+         * @see #stop()
+         */
+        public void start() {
+            mHandler.sendEmptyMessage(START);
+        }
+
+        /**
+         * Stops the consuming sensor.
+         *
+         * @see #stop()
+         */
+        public void stop() {
+            mHandler.sendEmptyMessage(STOP);
         }
 
     }

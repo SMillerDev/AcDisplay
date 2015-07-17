@@ -16,7 +16,6 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA  02110-1301, USA.
  */
-
 package com.achep.acdisplay.providers;
 
 import android.app.PendingIntent;
@@ -26,13 +25,16 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.RemoteViews;
 
 import com.achep.acdisplay.App;
-import com.achep.acdisplay.Build;
 import com.achep.acdisplay.Config;
 import com.achep.acdisplay.R;
+import com.achep.base.content.ConfigBase;
+
+import static com.achep.base.Build.DEBUG;
 
 /**
  * Toggle widget provider.
@@ -40,7 +42,7 @@ import com.achep.acdisplay.R;
  * @author Artem Chepurnoy
  */
 public class ToggleWidgetProvider extends AppWidgetProvider
-        implements Config.OnConfigChangedListener {
+        implements ConfigBase.OnConfigChangedListener {
 
     private static final String TAG = "AppWidgetProvider";
 
@@ -65,7 +67,9 @@ public class ToggleWidgetProvider extends AppWidgetProvider
     }
 
     @Override
-    public void onConfigChanged(Config config, String key, Object value) {
+    public void onConfigChanged(@NonNull ConfigBase config,
+                                @NonNull String key,
+                                @NonNull Object value) {
         switch (key) {
             case Config.KEY_ENABLED:
                 updateWidgets(config.getContext());
@@ -81,7 +85,7 @@ public class ToggleWidgetProvider extends AppWidgetProvider
         mConfig = Config.getInstance();
         mConfig.registerListener(this);
 
-        if (Build.DEBUG) Log.d(TAG, "Toggle widget enabled");
+        if (DEBUG) Log.d(TAG, "Toggle widget enabled");
     }
 
     private void onDisabledInternal(Context context) {
@@ -92,7 +96,7 @@ public class ToggleWidgetProvider extends AppWidgetProvider
         mConfig.unregisterListener(this);
         mConfig = null;
 
-        if (Build.DEBUG) Log.d(TAG, "Toggle widget disabled");
+        if (DEBUG) Log.d(TAG, "Toggle widget disabled");
     }
 
     private void updateWidgets(Context context) {
@@ -113,7 +117,7 @@ public class ToggleWidgetProvider extends AppWidgetProvider
             RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.appwidget_toggle_layout);
             rv.setOnClickPendingIntent(R.id.container, pendingIntent);
             rv.setTextViewText(R.id.title, res.getString(
-                    mConfig.isEnabled() ? R.string.widget_toggle_enabled : R.string.widget_toggle_disabled));
+                    mConfig.isEnabled() ? R.string.enabled : R.string.disabled));
 
             // Tell the AppWidgetManager to perform an update on the current app widget
             appWidgetManager.updateAppWidget(appWidgetId, rv);

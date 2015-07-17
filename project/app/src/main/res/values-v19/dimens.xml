@@ -17,10 +17,13 @@
   ~ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
   ~ MA  02110-1301, USA.
   -->
-
 <resources>
 
+    <!--
+        Appwidget
+        -->
+
     <!-- Size of icons in KitKat launchers, such as Google Experience Launcher and other. -->
-    <dimen name="launcher_icon_size">60dp</dimen>
+    <dimen name="appwidget_icon_size">60dp</dimen>
 
 </resources>

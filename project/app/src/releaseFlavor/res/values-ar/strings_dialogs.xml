@@ -19,33 +19,46 @@
   ~ MA  02110-1301, USA.
   -->
 <resources>
-  <string name="close">إغلاق</string>
-  <string name="about_action">حول التطبيق</string>
-  <string name="about_message"><![CDATA[
-        حقوق النشر  2013-2014 <a href="https://plus.google.com/+АртёмЧепурной">Artem Chepurnoy</a>. جميع الحقوق محفوظة .<br/>
+  <string name="about_dialog_message"><![CDATA[
+        تطبيق AcDisplay هو تطبيق مجاني و<a href="http://repo.acdisplay.org">مفتوح المصدر</a>.
+        حقوق النشر 2013-%2$s <a href="http://artemchep.com">Artem Chepurnoy</a>. جميع الحقوق محفوظة.<br/>
         <br/>
-        Many thanks to those open source tools: %1$s and to all who
-        <a href="http://translate.acdisplay.org">helped with translations</a> or
-        <a href="https://plus.google.com/102696863054832206920/posts/7wi3WfWGSfH">donated to me</a>.
+        جزيل الشكر للأدوات مفتوحة المصدر الآتية: %1$s ولكل من
+        <a href="http://translate.acdisplay.org">ساعد في ترجمة التطبيق</a>، أو قام بالتبرع.
     ]]></string>
-  <string name="help">مساعدة</string>
-  <string name="help_faq">الأسئلة الشائعة </string>
-  <string name="news_message"><![CDATA[
-        Welcome to the new version of AcDisplay!
-        This update brings a completely new and unique design with a lot of new possibilities.
-        The design is more streamlined and is aimed at giving you the best possible experience!<br/>
-        <br/>
-        <b>One touch for all actions.</b><br/>
-        Unlocking the device, checking the notifications or performing an actions on them can be done with a single motion.<br/>
-        <br/>
-        <b>Unlock field is anywhere and everywhere.</b><br/>
-        Swipe anywhere on free space to unlock.
+  <string name="donate_dialog_title">تبرَّع للمطورين</string>
+  <string name="donate_dialog_message">تطبيق AcDisplay هو تطبيق مجاني ومفتوح المصدر. يمكنك إظهار تقديرك ودعمك لتطوير التطبيق عن طريق التبرع:</string>
+  <string name="donate_alert_no_responsibility">لاحظ أن Google ليست مسؤولة عن طريقة الدفع هذه.</string>
+  <string name="donate_billing_not_supported">خاصية الشراء ضمن التطبيق غير مدعومة في هذا الجهاز.</string>
+  <string name="donate_thanks">شكرًا جزيلًا لك!</string>
+  <string name="donation_1">بوظة</string>
+  <string name="donation_4">فنجان قهوة</string>
+  <string name="donation_10">فواتير الكهرباء</string>
+  <string name="donation_20">وسادة مناسبة</string>
+  <string name="donation_50">محرك أقراص SSD</string>
+  <string name="donation_99">نظام صوتي</string>
+  <string name="cry_dialog_title">دعم التطوير</string>
+  <string name="cry_dialog_message"><![CDATA[
+        تطبيق AcDisplay هو تطبيق مجاني و<a href="http://repo.acdisplay.org">مفتوح المصدر</a>، ولقد قمنا بصرف
+        الكثير من الوقت والموارد لإبقائه محدَّثا. لطفًا، فكر في تبرع لإظهار
+        تقديرك ودعمك للتطويرات المستقبلية.
     ]]></string>
-  <string name="speech_message"><![CDATA[
-        Hello,<br/>
-        First of all I want to thank you for the amount of downloads and high ratings on Play Store.
-        Huge progress has been made in AcDisplay and a this could not have been done without the community. That is why AcDisplay is <a href="https://www.github.com/AChep/AcDisplay">open</a> for everyone. But I need some help from you.<br/>
-        This is my last school year and I would like to buy a notebook for future studies and to bring the world awesome software wherever I may be.
-        I would highly appreciate your help with it.
-    ]]></string>
+  <string name="help_dialog_title">مساعدة</string>
+  <string name="feedback_dialog_title">إبلاغ أو اقتراح</string>
+  <string name="feedback_dialog_message_hint">الرسالة الخاصة بك. سيتم تضمين مواصفات الجهاز تلقائياً.</string>
+  <string name="feedback_dialog_attach_log">إرفاق سجل البرنامج</string>
+  <string name="feedback_dialog_read_help">الأسئلة الشائعة</string>
+  <string name="feedback_error_no_app">قم بتثبيت أي من تطبيقات البريد الإلكتروني.</string>
+  <string name="feedback_error_msg_too_short">يجب أن تحتوي الرسالة على الأقل على %1$d رمز.</string>
+  <string name="feedback_error_accessing_log">خطأ في الوصول إلى سجل التطبيق. الخطأ: %1$s</string>
+  <string name="compat_dialog_title">وضعية التوافق</string>
+  <string name="compat_dialog_message">تطبيق AcDisplay يعمل حاليًا على وضعية التوافق لدعم  أندرويد %1$s: %2$s</string>
+  <string name="compat_dialog_item_notification">لأن AcDisplay يستخدم خدمات «إمكانية الدخول»، فإنه لا يمكنه كشف الإشعارات في حالة تحديثها أو استبعادها، أو استبعاد إشعارات من نافذة الإشعارات.</string>
+  <string name="compat_dialog_item_immersive_mode">شريط التنقل ظاهر دائمًا.</string>
+  <string name="compat_dialog_item_music_widget">لا تتوفر أداة للموسيقى.</string>
+  <string name="error_dialog_title">حدث خطأ ما</string>
+  <string name="error_dialog_custom_widget_lg"><![CDATA[
+        بسبب خطأ في نظام LG فإن التطبيق المصغر المخصص لا يمكن إنشاؤه
+        <a href="https://github.com/AChep/AcDisplay/issues/76">لمعرفة المزيد</a>.    
+    ]]></string>
 </resources>

@@ -24,9 +24,10 @@ import android.widget.CompoundButton;
 import com.achep.acdisplay.R;
 import com.achep.acdisplay.blacklist.AppConfig;
 import com.achep.acdisplay.blacklist.Blacklist;
+import com.achep.base.utils.ResUtils;
 
 /**
- * An option for {@link com.achep.acdisplay.blacklist.fragments.BlacklistAppFragment app settings}
+ * An option for {@link com.achep.acdisplay.ui.fragments.BlacklistAppFragment app settings}
  * to allow enabling non-clearable notifications.
  *
  * @author Artem Chepurnoy
@@ -36,7 +37,7 @@ public class NonClearableOption extends Option {
     public NonClearableOption(Context context, CompoundButton cb,
                               Blacklist blacklist, String packageName) {
         super(context, cb, blacklist, packageName,
-                context.getResources().getDrawable(R.drawable.ic_settings_non_clearable_notifies),
+                ResUtils.getDrawable(context, R.drawable.ic_settings_non_clearable_notifies),
                 context.getResources().getString(R.string.blacklist_app_non_clearable_title),
                 context.getResources().getString(R.string.blacklist_app_non_clearable_summary));
     }

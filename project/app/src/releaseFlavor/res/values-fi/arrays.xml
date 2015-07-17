@@ -20,12 +20,34 @@
   -->
 <resources>
   <string-array name="feedback_types">
-    <item>Virheilmoitus</item>
+    <item>Ongelma</item>
     <item>Ehdotus</item>
     <item>Muu</item>
   </string-array>
   <string-array name="dynamic_background">
-    <item>Kansikuva</item>
+    <item>Kansitaide</item>
     <item>Ilmoituksen kuvake</item>
+  </string-array>
+  <string-array name="privacy_mode">
+    <item>Piilota ilmoitusten sisältö</item>
+    <item>Piilota ilmoitusten toiminnot</item>
+  </string-array>
+  <string-array name="notify_priorities">
+    <item>Kriittiset ja kiireelliset (vastaamattomat puhelut, ajo-ohjeet, hätävaroitukset)</item>
+    <item>Tärkeät (viestintä, tärkeät sähköpostit)</item>
+    <item>Normaalit (+ilmoitukset vanhoista sovelluksista)</item>
+    <item>Ei-tärkeät (järjestelmäpäivitykset, roskaposti)</item>
+    <item>Kontekstuaaliset ja taustatiedot (sää, vanhentuneet tapahtumat, ehdotukset)</item>
+  </string-array>
+  <string-array name="corners_actions">
+    <item>Avaa lukitus</item>
+    <item>Käynnistä kamera</item>
+    <item>Soita puhelu</item>
+  </string-array>
+  <string-array name="keyguard_lock_delay">
+    <item>No delay</item>
+    <item>5 seconds</item>
+    <item>15 seconds</item>
+    <item>30 seconds</item>
   </string-array>
 </resources>

@@ -26,21 +26,27 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.achep.acdisplay.Build;
+import com.achep.acdisplay.Config;
 import com.achep.acdisplay.services.activemode.ActiveModeSensor;
+import com.achep.base.content.ConfigBase;
+
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
+import static com.achep.base.Build.DEBUG;
+
 /**
  * Basing on results of proximity sensor it notifies when
- * {@link com.achep.acdisplay.acdisplay.AcDisplayActivity AcDisplay}
+ * {@link com.achep.acdisplay.ui.activities.AcDisplayActivity AcDisplay}
  * should be shown.
  *
  * @author Artem Chepurnoy
  */
 public final class ProximitySensor extends ActiveModeSensor implements
-        SensorEventListener {
+        SensorEventListener, ConfigBase.OnConfigChangedListener {
 
     private static final String TAG = "ProximitySensor";
 
@@ -65,7 +71,8 @@ public final class ProximitySensor extends ActiveModeSensor implements
     private final Handler mHandler;
     private int mHistoryMaximumSize;
 
-    private Program mPocketProgram;
+    private final Program mPocketProgram;
+    private final Program mWave2WakeProgram;
 
     private static class Program {
 
@@ -75,17 +82,73 @@ public final class ProximitySensor extends ActiveModeSensor implements
         private static class Data {
             public final boolean isNear;
             public int timeMin;
-            public long timeMax;
+            public final long timeMax;
 
             public Data(boolean isNear, int timeMin, long timeMax) {
                 this.isNear = isNear;
                 this.timeMin = timeMin;
                 this.timeMax = timeMax;
             }
+
+            /**
+             * {@inheritDoc}
+             */
+            @Override
+            public int hashCode() {
+                return new HashCodeBuilder(31, 3615)
+                        .append(isNear)
+                        .append(timeMin)
+                        .append(timeMax)
+                        .toHashCode();
+            }
+
+            /**
+             * {@inheritDoc}
+             */
+            @Override
+            public boolean equals(Object o) {
+                if (o == this)
+                    return true;
+                if (!(o instanceof Data))
+                    return false;
+
+                Data data = (Data) o;
+                return new EqualsBuilder()
+                        .append(isNear, data.isNear)
+                        .append(timeMin, data.timeMin)
+                        .append(timeMax, data.timeMax)
+                        .isEquals();
+            }
         }
 
         public Program(@NonNull Data[] dataArray) {
             this.dataArray = dataArray;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public int hashCode() {
+            return new HashCodeBuilder(2369, 31)
+                    .append(dataArray)
+                    .toHashCode();
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public boolean equals(Object o) {
+            if (o == this)
+                return true;
+            if (!(o instanceof Program))
+                return false;
+
+            Program program = (Program) o;
+            return new EqualsBuilder()
+                    .append(dataArray, program.dataArray)
+                    .isEquals();
         }
 
         public static int fits(@NonNull Program program, @NonNull ArrayList<Event> history) {
@@ -181,16 +244,16 @@ public final class ProximitySensor extends ActiveModeSensor implements
                 .begin(true, POCKET_START_DELAY) /* is near at least for some seconds */
                 .end(0) /* and after: is far  at least for 0 seconds */
                 .build();
-        Program programWave2Wake = new Program.Builder()
+        mWave2WakeProgram = new Program.Builder()
                 .begin(true, 200) /*        is near at least for 200 millis */
-                .add(0, 1000) /* and after: is far  not more than 1 second  */
-                .add(0, 1000) /* and after: is near not more than 1 second  */
+                .add(0, 1500) /* and after: is far  not more than 1 second  */
+                .add(0, 1500) /* and after: is near not more than 1 second  */
                 .end(0)       /* and after: is far  at least for  0 second  */
                 .build();
 
         mPrograms = new ArrayList<>();
-        if (Build.DEBUG) mPrograms.add(programWave2Wake);
         mPrograms.add(mPocketProgram);
+        mPrograms.add(mWave2WakeProgram); // needed to include in history size calculation
 
         for (Program program : mPrograms) {
             int size = program.dataArray.length;
@@ -228,10 +291,13 @@ public final class ProximitySensor extends ActiveModeSensor implements
 
     @Override
     public void onStart(@NonNull SensorManager sensorManager) {
-        if (Build.DEBUG) Log.d(TAG, "Starting proximity sensor...");
+        if (DEBUG) Log.d(TAG, "Starting proximity sensor...");
 
         mHistory.clear();
         mHistory.add(new Event(false, getTimeNow()));
+
+        Config.getInstance().registerListener(this);
+        updateWave2WakeProgram();
 
         // Ignore pocket program's start delay,
         // so app can act just after it has started.
@@ -247,12 +313,14 @@ public final class ProximitySensor extends ActiveModeSensor implements
 
     @Override
     public void onStop() {
-        if (Build.DEBUG) Log.d(TAG, "Stopping proximity sensor...");
+        if (DEBUG) Log.d(TAG, "Stopping proximity sensor...");
 
         SensorManager sensorManager = getSensorManager();
         sensorManager.unregisterListener(this);
         mHandler.removeCallbacksAndMessages(null);
         mHistory.clear();
+
+        Config.getInstance().unregisterListener(this);
     }
 
     @Override
@@ -263,12 +331,12 @@ public final class ProximitySensor extends ActiveModeSensor implements
 
         synchronized (monitor) {
             long now = getTimeNow();
-            if (Build.DEBUG) {
+            if (DEBUG) {
                 int historySize = mHistory.size();
                 String delta = (historySize > 0
                         ? " delta=" + (now - mHistory.get(historySize - 1).time)
                         : " first_event");
-                Log.d(TAG + ":SensorEvent", "distance=" + distance
+                Log.d(TAG + ":Event", "distance=" + distance
                         + " is_near=" + isNear
                         + " changed=" + changed
                         + delta);
@@ -281,7 +349,7 @@ public final class ProximitySensor extends ActiveModeSensor implements
                 return;
             }
 
-            if (mHistory.size() >= mHistoryMaximumSize)
+            while (mHistory.size() >= mHistoryMaximumSize)
                 mHistory.remove(0);
 
             mHandler.removeCallbacksAndMessages(null);
@@ -314,5 +382,31 @@ public final class ProximitySensor extends ActiveModeSensor implements
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) { /* unused */ }
+
+    @Override
+    public void onConfigChanged(@NonNull ConfigBase config,
+                                @NonNull String key,
+                                @NonNull Object value) {
+        switch (key) {
+            case Config.KEY_ACTIVE_MODE_WAVE_TO_WAKE:
+                updateWave2WakeProgram();
+                break;
+        }
+    }
+
+    private void updateWave2WakeProgram() {
+        synchronized (monitor) {
+            boolean enabled = Config.getInstance().isActiveModeWaveToWakeEnabled();
+            if (enabled) {
+                if (!mPrograms.contains(mWave2WakeProgram)) {
+                    if (DEBUG) Log.d(TAG, "Added the \"Wave to wake\" program");
+                    mPrograms.add(mWave2WakeProgram);
+                }
+            } else {
+                if (DEBUG) Log.d(TAG, "Removed the \"Wave to wake\" program");
+                mPrograms.remove(mWave2WakeProgram);
+            }
+        }
+    }
 
 }

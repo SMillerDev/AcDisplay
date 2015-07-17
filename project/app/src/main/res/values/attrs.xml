@@ -31,7 +31,7 @@
 
     <declare-styleable name="TextView">
         <attr name="font" format="string" />
-        <attr name="font_sdk" format="integer" />
+        <attr name="font_beforeApi" format="integer" />
     </declare-styleable>
 
     <declare-styleable name="NotificationWidget">
@@ -41,46 +41,39 @@
         <attr name="actionItemShowIcon" format="boolean" />
     </declare-styleable>
 
-    <declare-styleable name="HeadsUpNotificationView">
-        <attr name="rippleColor" format="color" />
-        <attr name="ripple" format="boolean" />
+    <declare-styleable name="NotificationMessages">
+        <attr name="maxLines" format="integer" />
+        <attr name="highlightMessages" format="boolean" />
     </declare-styleable>
-    
+
     <declare-styleable name="Theme">
 
         <!-- Dialog styles -->
-        <attr name="textAppearanceDialogTitle" format="reference"/>
-        <attr name="textAppearanceDialogMessage" format="reference"/>
-        <attr name="textAppearanceDialogInfo" format="reference"/>
+        <attr name="dialogTitleStyle" format="reference" />
+        <attr name="dialogMessageStyle" format="reference" />
+
+        <!-- Dashboard -->
+        <attr name="dashboardCategoryTitle" format="reference" />
+        <attr name="dashboardCategoryBackground" format="reference|color" />
 
         <!-- AcDisplay -->
-        <attr name="acDisplayClock" format="reference"/>
-        <attr name="acDisplayClockSmall" format="reference"/>
-        <attr name="acDisplayStatus" format="reference"/>
-        <attr name="acDisplayNotificationTitle" format="reference"/>
-        <attr name="acDisplayNotificationMessage" format="reference"/>
-        <attr name="acDisplayNotificationSubtext" format="reference"/>
-        <attr name="acDisplayTimeoutProgressDrawable" format="reference"/>
-        <attr name="acDisplayDotsDrawable" format="reference"/>
+        <attr name="acDisplayTitle" format="reference" />
+        <attr name="acDisplaySubtitle" format="reference" />
+        <attr name="acDisplayMessage" format="reference" />
+        <attr name="acDisplayAction" format="reference" />
+        <attr name="acDisplayLargeClock" format="reference" />
+        <attr name="acDisplaySmallClock" format="reference" />
 
-        <!--
-            HeadsUp
-            -->
-        <!-- The layout to be used for as notification. -->
-        <attr name="headsUpNotificationLayout"  format="integer" />
-        <!-- The style of notification's title text. -->
-        <attr name="headsUpNotificationTitle"   format="reference" />
-        <!-- The style of notification's message text. -->
-        <attr name="headsUpNotificationMessage" format="reference" />
-        <!-- The style of notification's subtext text. -->
-        <attr name="headsUpNotificationSubtext" format="reference" />
-        <!-- The style of notification's action button. -->
-        <attr name="headsUpNotificationAction" format="reference" />
-        <!-- The background of notification. -->
-        <attr name="headsUpNotificationBackground" format="reference|color" />
-        <!-- The color of ripple effect. -->
-        <attr name="headsUpNotificationRippleColor" format="color" />
-        <!-- The background of small icon of notification. -->
-        <attr name="headsUpNotificationSmallIconBackground"  format="reference|color" />
+        <!-- Main -->
+        <attr name="colorSecondary" format="reference|color" />
     </declare-styleable>
+
+    <declare-styleable name="DashboardTile">
+        <attr name="dashboard_id" format="string" />
+        <attr name="dashboard_icon" format="reference" />
+        <attr name="dashboard_title" format="reference|string" />
+        <attr name="dashboard_summary" format="reference|string" />
+        <attr name="dashboard_fragment" format="string" />
+    </declare-styleable>
+
 </resources>

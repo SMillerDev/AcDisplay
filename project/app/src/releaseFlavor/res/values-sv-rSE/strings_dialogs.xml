@@ -19,33 +19,34 @@
   ~ MA  02110-1301, USA.
   -->
 <resources>
-  <string name="close">Stäng</string>
-  <string name="about_action">Om</string>
-  <string name="about_message"><![CDATA[
-        Copyright 2013-2014 <a href="https://plus.google.com/+АртёмЧепурной">Artem Chepurnoy</a>. All rättigheter reserverade.<br/>
-        <br/>
-        Stort tack för alla open source verktyg: %1$s och till alla de som
-        <a href="http://translate.acdisplay.org">hjälpt till med översättningar</a> eller
-        <a href="https://plus.google.com/102696863054832206920/posts/7wi3WfWGSfH">som har donerat till mig</a>.
-    ]]></string>
-  <string name="help">Hjälp</string>
-  <string name="help_faq">Vanliga frågor</string>
-  <string name="news_message"><![CDATA[
-        Välkommen till den nya versionen av AcDisplay!
-        Den här uppdateringen ger er en helt ny och unik design med massor av nya möjligheter.  
-        Designen är mer strömlinjeformad och inriktad på att ge er den bästa upplevelsen!<br/>
-        <br/>
-        <b>Ett tryck för alla åtgärder.</b><br/>
-        Låsa upp enheten, kontrollera meddelanden eller utföra en åtgärd med dem kan göras med endast en rörelse. <br/>
-        <br/>
-        <b>Upplåsning kan göras var som helst.</b><br/>
-        Svep var som helst på de fria ytorna för att låsa upp.
-    ]]></string>
-  <string name="speech_message"><![CDATA[
-        Hej,<br/>
-        Först vill jag tacka alla för mängden av nedladdningar och höga ranking på Play Store.
-        Stor utveckling av AcDisplay har gjorts och det skulle inte ha varit möjligt utan alla medlemmar i varan community. Det är därför AcDisplay är <a href="https://www.github.com/AChep/AcDisplay">öppen</a> för alla. Men jag behöver eran hjälp.<br/>
-        Det här är mitt sista skolår och jag skulle vilja köpa en notebook för framtida studier och för att skapa fantastiska program var jag än är. 
-        Jag skulle verkligen uppskatta eran hjälp till det.
-    ]]></string>
+  <string name="about_dialog_message"><![CDATA[         AcDisplay är en fri och <a href="http://repo.acdisplay.org"> öppen källkods</a> applikation.         Copyright 2013-%2$s <a href="http://artemchep.com"> Artem Chepurnoy</a>. Alla rättigheter reserverade. <br/>         <br/> Stort tack till dessa open source-verktyg: %1$s och till alla som <a href="http://translate.acdisplay.org"> hjälpt till med översättningar</a> eller  <ahref="https://plus.google.com/app/basic/stream/z13ge5ipcriwf5kdd22rzd2igmapxn5k1">donerat</a>.     ]]></string>
+  <string name="donate_dialog_title">Donera till utvecklaren</string>
+  <string name="donate_dialog_message">AcDisplay är en fri och öppen källkod app. Du kan visa din uppskattning och stödja utvecklingen genom att donera:</string>
+  <string name="donate_alert_no_responsibility">Observera att Google inte är ansvariga för betalningsmetoden.</string>
+  <string name="donate_billing_not_supported">In-App köp stöds inte på enheten.</string>
+  <string name="donate_thanks">Tack så mycket!</string>
+  <string name="donation_1">En glass</string>
+  <string name="donation_4">En kopp kaffe</string>
+  <string name="donation_10">Elräkningar</string>
+  <string name="donation_20">En skön kudde</string>
+  <string name="donation_50">SSD-disk</string>
+  <string name="donation_99">Ljudsystem</string>
+  <string name="cry_dialog_title">Utvecklingsstöd</string>
+  <string name="cry_dialog_message"><![CDATA[         AcDisplay är en fri och <a href="http://repo.acdisplay.org"> öppen källkod</a> app och vi lägger ner mycket tid och resurser på att hålla det UpToDate. Överväg en donation att visa din uppskattning och att stödja ytterligare utveckling.     ]]></string>
+  <string name="help_dialog_title">Hjälp</string>
+  <string name="feedback_dialog_title">Feedback</string>
+  <string name="feedback_dialog_message_hint">Ditt meddelande. Enhetens specifikationer inkluderas automatiskt.</string>
+  <string name="feedback_dialog_attach_log">Bifoga en logg</string>
+  <string name="feedback_dialog_read_help">Vanliga frågor (FAQ)</string>
+  <string name="feedback_error_no_app">Installera någon E-postapplikation.</string>
+  <string name="feedback_error_msg_too_short">Meddelandet måste innehålla minst %1$d tecken.</string>
+  <string name="feedback_error_accessing_log">Fel vid åtkomst till applikationens logg. Felet är: %1$s</string>
+  <string name="compat_dialog_title">Kompatibilitetsläge</string>
+  <string name="compat_dialog_message">AcDisplay körs i ett kompatibilitetsläge för att stödja Android %1$s: %2$s</string>
+  <string name="compat_dialog_item_notification">Eftersom AcDisplay använder tillgänglighetstjänsten, kan den inte upptäcka notifikationer som ogillade/uppdateras, eller avstyra notifikationer från notifikationsfältet.</string>
+  <string name="compat_dialog_item_immersive_mode">Navigeringsfältet visas alltid.</string>
+  <string name="compat_dialog_item_music_widget">Ingen musikwidget.</string>
+  <string name="error_dialog_title">Något gick fel</string>
+  <string name="error_dialog_custom_widget_lg"><![CDATA[På grund av ett fel i LGs mjukvara kan inte widgeten appliceras.
+<a href="https://github.com/AChep/AcDisplay/issues/76">Read more</a>.]]></string>
 </resources>
