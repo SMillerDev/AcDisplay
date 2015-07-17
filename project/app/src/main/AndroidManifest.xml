@@ -112,7 +112,7 @@
             android:launchMode="singleTask"
             android:parentActivityName=".ui.activities.settings.Settings2"
             android:taskAffinity=".settings"
-            android:theme="@android:style/Theme.Holo" />
+            android:theme="@style/MaterialTheme" />
 
         <activity
             android:name=".ui.activities.settings.SubBlacklistActivity"
@@ -120,7 +120,7 @@
             android:label="@string/blacklist_app_config"
             android:parentActivityName=".ui.activities.settings.BlacklistActivity"
             android:taskAffinity=".settings"
-            android:theme="@android:style/Theme.Holo" />
+            android:theme="@style/Base.MaterialTheme" />
 
         <activity
             android:name=".ui.activities.tests.ShakeTestActivity"

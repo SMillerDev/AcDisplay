@@ -36,7 +36,7 @@ public final class Blacklist extends SharedList<AppConfig, AppConfig.Saver> {
 
     private static final String TAG = "Blacklist";
 
-    public static final String PREF_NAME = "blacklist";
+    public static final String PREF_NAME = "Apps";
 
     private static Blacklist sBlacklist;
 
